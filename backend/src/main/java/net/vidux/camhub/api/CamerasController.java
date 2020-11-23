@@ -6,7 +6,6 @@ import net.vidux.camhub.repositories.CameraRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -35,12 +34,8 @@ public class CamerasController {
     }
 
     @GetMapping
-    public HttpEntity<CameraRepresentation> getCameraList(){
-//        CameraRepresentation camera = cameraRepresentationAssembler.toModel((Camera)cameraRepo.getCameras().toArray()[0]);
-//        camera.add(linkTo(methodOn(CamerasController.class).getCameraList()).withSelfRel());
-//        return new ResponseEntity<>(camera, HttpStatus.OK);
-
+    public ResponseEntity<CollectionModel<CameraRepresentation>> getCameraList(){
         CollectionModel<CameraRepresentation> cameras = cameraRepresentationAssembler.toCollectionModel(cameraRepo.getCameras());
-        return new ResponseEntity(cameras, HttpStatus.OK);
+        return new ResponseEntity<>(cameras, HttpStatus.OK);
     }
 }
