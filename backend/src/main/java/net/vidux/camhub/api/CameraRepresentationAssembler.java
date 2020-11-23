@@ -6,8 +6,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-
 @Component
 public class CameraRepresentationAssembler extends RepresentationModelAssemblerSupport<Camera, CameraRepresentation> {
 
@@ -16,17 +14,17 @@ public class CameraRepresentationAssembler extends RepresentationModelAssemblerS
     }
 
     @Override
-    public CameraRepresentation toModel (@NonNull Camera entity) {
-        final CameraRepresentation model =
+    public CameraRepresentation toModel (@NonNull Camera camera) {
+        final CameraRepresentation cameraRepresentation =
                 CameraRepresentation.builder()
-                        .name(entity.getName())
-                        .ip(entity.getIp())
-                        .firmware(entity.getFirmware())
-                        .lastSeen(entity.getLastSeen())
+                        .name(camera.getName())
+                        .ip(camera.getIp())
+                        .firmware(camera.getFirmware())
+                        .lastSeen(camera.getLastSeen())
                         .build();
 
 //        Link self = linkTo(getControllerClass()).slash(entity.Class()).withSelfRel();
-//        model.add(self);
-        return model;
+//        cameraRepresentation.add(self);
+        return cameraRepresentation;
     }
 }

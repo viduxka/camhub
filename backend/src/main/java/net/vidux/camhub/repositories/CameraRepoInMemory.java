@@ -8,20 +8,8 @@ import java.util.List;
 
 @Repository("InMemoryDB")
 public class CameraRepoInMemory implements CameraRepo {
-//    private static CameraRepoInMemory singleInstance = null;
 
     private static final List<Camera> cameraDB = new ArrayList<>();
-
-//    private CameraRepoInMemory() {
-//        CameraDB = new ArrayList<>();
-//    }
-//
-//    public static CameraRepoInMemory getInstance(){
-//        if (singleInstance == null) {
-//            singleInstance = new CameraRepoInMemory();
-//        }
-//        return singleInstance;
-//    }
 
     @Override
     public List<Camera> getCameras() {
