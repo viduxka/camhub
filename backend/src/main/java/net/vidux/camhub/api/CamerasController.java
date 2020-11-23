@@ -5,11 +5,16 @@ import net.vidux.camhub.models.Camera;
 import net.vidux.camhub.repositories.CameraRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.List;
 
 @RequestMapping("/api/v1/cameras")
 @RestController
@@ -17,6 +22,9 @@ import java.util.List;
 public class CamerasController {
 
     private final CameraRepo cameraRepo;
+
+    @Autowired
+    private CameraRepresentationAssembler cameraRepresentationAssembler;
 
     @Autowired
     public CamerasController(@Qualifier("InMemoryDB") CameraRepo cameraRepo) {
@@ -27,7 +35,12 @@ public class CamerasController {
     }
 
     @GetMapping
-    public List<Camera> getCameraList(){
-        return cameraRepo.getCameras();
+    public HttpEntity<CameraRepresentation> getCameraList(){
+//        CameraRepresentation camera = cameraRepresentationAssembler.toModel((Camera)cameraRepo.getCameras().toArray()[0]);
+//        camera.add(linkTo(methodOn(CamerasController.class).getCameraList()).withSelfRel());
+//        return new ResponseEntity<>(camera, HttpStatus.OK);
+
+        CollectionModel<CameraRepresentation> cameras = cameraRepresentationAssembler.toCollectionModel(cameraRepo.getCameras());
+        return new ResponseEntity(cameras, HttpStatus.OK);
     }
 }
