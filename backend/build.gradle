@@ -1,40 +1,68 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.0'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-	id 'java'
-	id 'info.solidsoft.pitest' version '1.5.2'
+    id 'org.springframework.boot' version '2.4.0'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+    id 'info.solidsoft.pitest' version '1.5.2'
+    id "com.adarshr.test-logger" version "2.1.1"
+    id "com.github.ben-manes.versions" version "0.34.0"
 }
+
+apply plugin: 'groovy'
 
 group = 'net.vidux'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.projectlombok:lombok'
-	pitest 'org.pitest:pitest-junit5-plugin:0.12'
-	implementation project(':frontend')
+    compile "org.codehaus.groovy:groovy"
+    testImplementation("org.spockframework:spock-core")
+    testImplementation group: 'org.spockframework', name: 'spock-spring', version: '2.0-M3-groovy-3.0'
+    testImplementation(enforcedPlatform("org.spockframework:spock-bom:2.0-M1-groovy-2.5"))
+
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    pitest 'org.pitest:pitest-junit5-plugin:0.12'
 }
 
-//pitest {
-//    pitestVersion = "1.5.2"
-//    testPlugin = "junit5"
-//    //    threads = 1
-//    //    verbose = true
-//    targetClasses = [""]
-//    targetTests = [""]
-//    testSourceSets = [sourceSets.test]
-//    outputFormats = ['HTML']
-//}
+pitest {
+    pitestVersion = "1.5.2"
+    testPlugin = "junit5"
+    //    threads = 1
+    //    verbose = true
+    targetClasses = ["net.vidux.camhub.repositories.CameraRepoInMemory"]
+    targetTests = ["net.vidux.camhub.InMemoryDBTest"]
+    testSourceSets = [sourceSets.test]
+    outputFormats = ['HTML']
+}
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
+    failFast = true
+}
+
+testlogger {
+    theme "mocha"
+    showExceptions true
+    showStackTraces true
+    showFullStackTraces true
+    showCauses true
+    slowThreshold 2000
+    showSummary true
+    showSimpleNames false
+    showPassed true
+    showSkipped true
+    showFailed true
+    showStandardStreams true
+    showPassedStandardStreams false
+    showSkippedStandardStreams false
+    showFailedStandardStreams true
+    // logLevel "lifecycle"
 }
