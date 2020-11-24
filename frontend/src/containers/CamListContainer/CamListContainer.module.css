@@ -1,0 +1,12 @@
+.CameraTableHeader {
+  color: gray;
+}
+
+.CameraList {
+  text-align: left;
+  margin-left: 0px;
+  color: white;
+  border-collapse: separate;
+  border-spacing: 0 2px;
+  width: 100%;
+}
