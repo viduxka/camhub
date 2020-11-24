@@ -32,16 +32,16 @@ dependencies {
     pitest 'org.pitest:pitest-junit5-plugin:0.12'
 }
 
-//pitest {
-//    pitestVersion = "1.5.2"
-//    testPlugin = "junit5"
-//    //    threads = 1
-//    //    verbose = true
-//    targetClasses = [""]
-//    targetTests = [""]
-//    testSourceSets = [sourceSets.test]
-//    outputFormats = ['HTML']
-//}
+pitest {
+    pitestVersion = "1.5.2"
+    testPlugin = "junit5"
+    //    threads = 1
+    //    verbose = true
+    targetClasses = ["net.vidux.camhub.repositories.CameraRepoInMemory"]
+    targetTests = ["net.vidux.camhub.InMemoryDBTest"]
+    testSourceSets = [sourceSets.test]
+    outputFormats = ['HTML']
+}
 
 test {
     useJUnitPlatform()
