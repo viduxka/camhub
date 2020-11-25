@@ -51,14 +51,14 @@ class CamListContainer extends Component {
     let list = null;
     if (this.state.cameras !== undefined) {
       list = this.state.cameras.map((camera, index) => {
-        const { name, ip, firmware, lastseen, owner, capabilities } = camera;
+        const { name, ip, firmware, lastSeen, owner, capabilities } = camera;
         return (
           <CamListItem
             key={index}
             name={name}
             ip={ip}
             firmware={firmware}
-            lastSeen={lastseen}
+            lastSeen={lastSeen}
             owner={owner}
             capabilities={capabilities}
           />
