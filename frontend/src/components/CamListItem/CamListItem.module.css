@@ -1,0 +1,16 @@
+.CameraRow {
+  padding: 2px;
+  background-color: #4b4c60;
+  height: 40px;
+}
+
+.CameraTableHeader {
+  color: gray;
+}
+
+.CamTableDataNormal {
+}
+
+.CamTableDataLong {
+  min-width: 250px;
+}
