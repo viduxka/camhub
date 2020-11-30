@@ -36,8 +36,6 @@ task copyWebApp(type: Copy) {
     into "$rootDir/backend/build/resources/main/static/."
 }
 
-bootJar.dependsOn(copyWebApp)
-compileJava.dependsOn ":frontend:build"
 
 pitest {
     pitestVersion = "1.5.2"
@@ -73,3 +71,6 @@ testlogger {
     showFailedStandardStreams true
     // logLevel "lifecycle"
 }
+
+bootJar.dependsOn(copyWebApp)
+assemble.mustRunAfter(":frontend:build")
