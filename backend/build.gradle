@@ -31,11 +31,14 @@ dependencies {
     pitest 'org.pitest:pitest-junit5-plugin:0.12'
 }
 
-task copyWebApp(type: Copy) {
+task copyFrontEnd(type: Copy) {
     from "$rootDir/frontend/build"
     into "$rootDir/backend/build/resources/main/static/."
 }
 
+task delFrontEnd(type: Delete){
+    delete "$rootDir/backend/build/resources/main/static/", "application.properties"
+}
 
 pitest {
     pitestVersion = "1.5.2"
@@ -72,5 +75,6 @@ testlogger {
     // logLevel "lifecycle"
 }
 
-bootJar.dependsOn(copyWebApp)
+bootJar.dependsOn(copyFrontEnd)
 assemble.mustRunAfter(":frontend:build")
+bootRun.dependsOn(delFrontEnd)
