@@ -11,7 +11,7 @@ node {
     download = true
 }
 
-task appNpmBuild(type: NpmTask) {
+task appNpmBuild(type: NpmTask, dependsOn: npmInstall) {
     args = ["run", "build"]
 }
 
