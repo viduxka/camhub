@@ -22,7 +22,6 @@ dependencies {
     testImplementation("org.spockframework:spock-core")
     testImplementation group: 'org.spockframework', name: 'spock-spring', version: '2.0-M3-groovy-3.0'
     testImplementation(enforcedPlatform("org.spockframework:spock-bom:2.0-M1-groovy-2.5"))
-
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -30,6 +29,15 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     pitest 'org.pitest:pitest-junit5-plugin:0.12'
+}
+
+task copyFrontEnd(type: Copy) {
+    from "$rootDir/frontend/build"
+    into "$rootDir/backend/build/resources/main/static/."
+}
+
+task delFrontEnd(type: Delete){
+    delete "$rootDir/backend/build/resources/main/static/", "application.properties"
 }
 
 pitest {
@@ -66,3 +74,7 @@ testlogger {
     showFailedStandardStreams true
     // logLevel "lifecycle"
 }
+
+bootJar.dependsOn(copyFrontEnd)
+assemble.mustRunAfter(":frontend:build")
+bootRun.dependsOn(delFrontEnd)
