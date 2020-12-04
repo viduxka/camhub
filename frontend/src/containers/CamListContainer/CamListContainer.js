@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classes from "./CamListContainer.module.css";
-import { Discover } from "../../components/Discover/Discover";
-import { CamListItem } from "../../components/CamListItem/CamListItem";
+import Discover from "../../components/Discover/Discover";
+import CamListItem from "../../components/CamListItem/CamListItem";
 
 const BASE_URL = "http://localhost:8080/api/v1/cameras";
 const TABLE_FIELDS = [
@@ -18,12 +18,16 @@ class CamListContainer extends Component {
     cameras: [],
   };
 
-  componentDidMount() {
+  getCameras = () =>{
     fetch(BASE_URL)
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({ cameras: json._embedded.cameras });
-      });
+    .then((response) => response.json())
+    .then((json) => {
+      this.setState({ cameras: json._embedded.cameras });
+    });
+  };
+
+  componentDidMount() {
+    this.getCameras();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -34,11 +38,11 @@ class CamListContainer extends Component {
     return (
       <thead>
         <tr>
-          <th className={classes.CameraTableHeader}>
+          <th data-test="component-camlistcontainer-th" className={classes.CameraTableHeader}>
             <Discover />
           </th>
           {TABLE_FIELDS.map((key, index) => (
-            <th className={classes.CameraTableHeader} key={index}>
+            <th data-test="component-camlistcontainer-th" className={classes.CameraTableHeader} key={index}>
               {key}
             </th>
           ))}
@@ -53,7 +57,7 @@ class CamListContainer extends Component {
       list = this.state.cameras.map((camera, index) => {
         const { name, ip, firmware, lastSeen, owner, capabilities } = camera;
         return (
-          <CamListItem
+          <CamListItem data-test="component-camlistcontainer-camlistitem"
             key={index}
             name={name}
             ip={ip}
