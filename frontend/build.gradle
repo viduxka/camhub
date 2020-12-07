@@ -15,4 +15,11 @@ task appNpmBuild(type: NpmTask, dependsOn: npmInstall) {
     args = ["run", "build"]
 }
 
+task uiTest(type: NpmTask){
+    environment = ["CI": "true"]
+    args = ["run", "test"]
+}
+
+test.dependsOn(uiTest)
+
 assemble.dependsOn(appNpmBuild)
