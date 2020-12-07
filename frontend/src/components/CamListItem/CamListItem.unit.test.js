@@ -64,7 +64,7 @@ describe('<CamListItem> component is rendered with...', () => {
 test("<CamListItem /> component is rendered with test Capability", () => {
   const testCapabilities = findByTestAttr(wrapper,"component-camlistitem-captable");
   const outTestCapName = testCapabilities.getElement().props.children.props.table;
-  const inTestCapName = Object.values(testProps)[Object.keys(testProps).length-1];
+  const inTestCapName = testProps.capabilities;
 
   expect(outTestCapName).toEqual(inTestCapName);
 });
