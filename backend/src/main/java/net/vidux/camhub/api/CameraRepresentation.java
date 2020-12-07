@@ -1,6 +1,7 @@
 package net.vidux.camhub.api;
 
 
+import java.util.Date;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
-
-import java.util.Date;
 
 @Getter
 @ToString
@@ -25,4 +24,6 @@ public class CameraRepresentation extends RepresentationModel<CameraRepresentati
   private String ip;
   private String firmware;
   private Date lastSeen;
+  private String password;
+  private String serialNumber;
 }
