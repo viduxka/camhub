@@ -22,10 +22,12 @@ public class CameraRepresentationAssembler
             .ip(camera.getIp())
             .firmware(camera.getFirmware())
             .lastSeen(camera.getLastSeen())
+            .password(camera.getPassword())
+            .serialNumber(camera.getSerialNumber())
             .build();
 
-    //        Link self = linkTo(getControllerClass()).slash(entity.Class()).withSelfRel();
-    //        cameraRepresentation.add(self);
+    Link camConfig = Link.of("http://" + camera.getIp(),"camConfig");
+    cameraRepresentation.add(camConfig);
     return cameraRepresentation;
   }
 }

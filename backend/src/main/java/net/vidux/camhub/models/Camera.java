@@ -13,4 +13,6 @@ public class Camera {
   private String ip;
   private String firmware;
   private Date lastSeen;
+  private String password;
+  private String serialNumber;
 }
