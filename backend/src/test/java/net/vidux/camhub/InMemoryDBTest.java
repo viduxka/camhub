@@ -22,7 +22,7 @@ class InMemoryDBTest {
 
   @Test
   void addCameraTest() {
-    Camera camera = new Camera("Alma", "123.123.123.123", "1.0", new Date(1605776141000L));
+    Camera camera = new Camera("Alma", "123.123.123.123", "1.0", new Date(1605776141000L),"asd","1234");
     assertEquals(0, cameraRepoInMemory.getCameras().size(), "Initial DB is not empty");
     assertEquals(0, cameraRepoInMemory.addCamera(null), "Adding null returns ok");
     assertEquals(1, cameraRepoInMemory.addCamera(camera), "Adding camera returns error");
