@@ -7,12 +7,12 @@ import { findByTestAttr } from '../../test/testUtils';
 let wrapper = null;
 const testProps = {
     key: 0,
-    name: "Teszt camera",
-    ip: "teszt ip",
-    firmware: "teszt firmware",
-    lastSeen: "teszt lastseen",
-    owner: "Teszt owner",
-    capabilities: "Teszt capability",
+    name: "Test camera",
+    ip: "Test ip",
+    firmware: "Test firmware",
+    lastSeen: "Test lastseen",
+    owner: "Test owner",
+    capabilities: ["Test capability1", "Test capability2"],
 };
 
 const setup = () => {

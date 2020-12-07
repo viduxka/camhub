@@ -18,12 +18,13 @@ class CamListContainer extends Component {
     cameras: [],
   };
 
-  getCameras = () =>{
+  getCameras = () => {
     fetch(BASE_URL)
     .then((response) => response.json())
     .then((json) => {
       this.setState({ cameras: json._embedded.cameras });
-    });
+    })
+    .catch(() => alert('Connection to server lost!'));
   };
 
   componentDidMount() {

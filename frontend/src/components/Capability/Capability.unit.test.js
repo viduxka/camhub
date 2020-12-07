@@ -3,7 +3,7 @@ import Capability from './Capability';
 import Label from '../Label/Label';
 
 let wrapper = null;
-const testText = "Teszt";
+const testText = "Test";
 const renderCapability = () => {
   wrapper = shallow(<Capability name={testText}/>);
 };
@@ -16,7 +16,7 @@ test("Capability creates Label component", () => {
   expect(wrapper.containsMatchingElement(Label)).toEqual(true);
 });
 
-test("Capability sets custom text in Label component",()=>{
+test("Capability sets custom text in Label component",() => {
   const wrapperLabel = wrapper.find(Label);
   expect(wrapperLabel.children().text()).toEqual(testText);
 });

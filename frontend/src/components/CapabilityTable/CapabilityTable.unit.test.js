@@ -10,7 +10,7 @@ test("capability table renders without error", () => {
 });
 
 test("capability table sets custom capabilities",() => {
-  const tesztLabels =["Teszt1", "Teszt2"];
+  const tesztLabels =["Test1", "Test2"];
   wrapper = shallow(<CapabilityTable table={tesztLabels}/>);
   const wrapperCap = findByTestAttr(wrapper, "component-capability-td");
   
