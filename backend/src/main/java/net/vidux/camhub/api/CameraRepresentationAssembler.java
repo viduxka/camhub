@@ -1,7 +1,7 @@
 package net.vidux.camhub.api;
 
 import lombok.NonNull;
-import net.vidux.camhub.models.Camera;
+import net.vidux.camhub.camera.Camera;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;

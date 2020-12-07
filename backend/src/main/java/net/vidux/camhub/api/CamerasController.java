@@ -1,8 +1,7 @@
 package net.vidux.camhub.api;
 
-import net.vidux.camhub.repositories.CameraRepo;
+import net.vidux.camhub.camera.CameraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class CamerasController {
 
-  private final CameraRepo cameraRepo;
+  @Autowired
+  private CameraRepository cameraRepo;
 
   @Autowired private CameraRepresentationAssembler cameraRepresentationAssembler;
-
-  @Autowired
-  public CamerasController(@Qualifier("InMemoryDB") CameraRepo cameraRepo) {
-    this.cameraRepo = cameraRepo;
-  }
 
   @GetMapping
   public ResponseEntity<CollectionModel<CameraRepresentation>> getCameraList() {
     CollectionModel<CameraRepresentation> cameras =
-        cameraRepresentationAssembler.toCollectionModel(cameraRepo.getCameras());
+        cameraRepresentationAssembler.toCollectionModel(cameraRepo.findAll());
     return new ResponseEntity<>(cameras, HttpStatus.OK);
   }
 }
