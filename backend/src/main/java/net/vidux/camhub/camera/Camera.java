@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,11 +16,13 @@ import javax.persistence.Id;
 @Entity
 @Builder
 public class Camera {
+  @Id
+  private long id;
   private String name;
   private String ip;
   private String firmware;
   private Date lastSeen;
   private String password;
-  @Id
+  @NaturalId
   private String serialNumber;
 }
