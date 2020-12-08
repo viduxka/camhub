@@ -3,7 +3,7 @@ import Label from "../Label/Label";
 
 const Capability = (props) => {
   return (
-    <td>
+    <td data-test="component-capability-td">
       <Label>{props.name}</Label>
     </td>
   );
