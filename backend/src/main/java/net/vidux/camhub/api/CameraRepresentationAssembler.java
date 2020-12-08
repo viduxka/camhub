@@ -6,6 +6,9 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 @Component
 public class CameraRepresentationAssembler
     extends RepresentationModelAssemblerSupport<Camera, CameraRepresentation> {
@@ -21,7 +24,7 @@ public class CameraRepresentationAssembler
             .name(camera.getName())
             .ip(camera.getIp())
             .firmware(camera.getFirmware())
-            .lastSeen(camera.getLastSeen())
+            .lastSeen(ZonedDateTime.ofInstant(camera.getLastSeen(), ZoneId.systemDefault()))
             .password(camera.getPassword())
             .serialNumber(camera.getSerialNumber())
             .build();

@@ -8,7 +8,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Component
 @Profile("!test")
@@ -23,7 +23,7 @@ public class InMemoryDbInit implements ApplicationRunner {
             .name("Alma")
             .ip("123.123.123.123")
             .firmware("1.0")
-            .lastSeen(new Date(1605776141000L))
+            .lastSeen(Instant.ofEpochMilli(1605776141000L))
             .password("asd")
             .serialNumber("1234")
             .build());
@@ -32,7 +32,7 @@ public class InMemoryDbInit implements ApplicationRunner {
             .name("Barack")
             .ip("123.123.123.124")
             .firmware("1.0")
-            .lastSeen(new Date(1605776151000L))
+            .lastSeen(Instant.ofEpochMilli(1605776151000L))
             .password("asd2")
             .serialNumber("6789")
             .build());
@@ -41,7 +41,7 @@ public class InMemoryDbInit implements ApplicationRunner {
             .name("Alma")
             .ip("123.123.123.125")
             .firmware("1.0")
-            .lastSeen(new Date(1605776161000L))
+            .lastSeen(Instant.ofEpochMilli(1605776161000L))
             .password("asd3")
             .serialNumber("1289")
             .build());
