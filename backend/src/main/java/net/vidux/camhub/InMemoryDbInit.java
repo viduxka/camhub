@@ -14,13 +14,36 @@ import java.util.Date;
 @Profile("!test")
 public class InMemoryDbInit implements ApplicationRunner {
 
-  @Autowired
-  private CameraRepository db;
+  @Autowired private CameraRepository db;
 
   @Override
   public void run(ApplicationArguments args) {
-    db.save(new Camera("Alma", "123.123.123.123", "1.0", new Date(1605776141000L),"asd","1234"));
-    db.save(new Camera("Barack", "123.123.123.124", "1.0", new Date(1605776151000L),"asd2","6789"));
-    db.save(new Camera("Citrom", "123.123.123.125", "1.0", new Date(1605776161000L),"asd3","1289"));
+    db.save(
+        Camera.builder()
+            .name("Alma")
+            .ip("123.123.123.123")
+            .firmware("1.0")
+            .lastSeen(new Date(1605776141000L))
+            .password("asd")
+            .serialNumber("1234")
+            .build());
+    db.save(
+        Camera.builder()
+            .name("Barack")
+            .ip("123.123.123.124")
+            .firmware("1.0")
+            .lastSeen(new Date(1605776151000L))
+            .password("asd2")
+            .serialNumber("6789")
+            .build());
+    db.save(
+        Camera.builder()
+            .name("Alma")
+            .ip("123.123.123.125")
+            .firmware("1.0")
+            .lastSeen(new Date(1605776161000L))
+            .password("asd3")
+            .serialNumber("1289")
+            .build());
   }
 }
