@@ -1,10 +1,13 @@
 package net.vidux.camhub.api;
 
 import lombok.NonNull;
-import net.vidux.camhub.models.Camera;
+import net.vidux.camhub.camera.Camera;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Component
 public class CameraRepresentationAssembler
@@ -21,7 +24,7 @@ public class CameraRepresentationAssembler
             .name(camera.getName())
             .ip(camera.getIp())
             .firmware(camera.getFirmware())
-            .lastSeen(camera.getLastSeen())
+            .lastSeen(ZonedDateTime.ofInstant(camera.getLastSeen(), ZoneId.systemDefault()))
             .password(camera.getPassword())
             .serialNumber(camera.getSerialNumber())
             .build();
