@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 export const ReserveRelease = () => {
   const classes = useStyles();
   const onClickHandler = (event) => {
-    console.log("Reserved/released");
+  //TODO
   };
 
   return (

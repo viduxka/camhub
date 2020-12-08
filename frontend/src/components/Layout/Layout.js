@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import classes from "./Layout.module.css";
 
-const layout = (props) => (
+const layout = props => (
   <Fragment>
     <div
       style={{

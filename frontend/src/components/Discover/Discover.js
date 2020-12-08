@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Discover = () => {
+const Discover = () => {
   const classes = useStyles();
 
   return (
@@ -33,3 +33,5 @@ export const Discover = () => {
     </Button>
   );
 };
+
+export default Discover;
