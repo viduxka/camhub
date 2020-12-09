@@ -9,6 +9,7 @@ const camlistTableAttributes = [
   "firmware",
   "last seen",
   "owner",
+  "serial number",
   "capabilities",
 ];
 
@@ -54,12 +55,13 @@ test("component displays proper cameras informations in the list", () => {
   const testCameras = {
     cameras: [
       {
-        name: "Vidux-1080p",
-        ip: "10.30.0.21",
+        name: "Vidux-1080pfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfds",
+        ip: "10.30.0.51",
         firmware: "5.4.21",
         lastSeen: "2020-01-10 13:13",
         owner: "gbene",
         capabilities: ["WDR", "1080p", "PoE"],
+        serialNumber: "123456789SN",
       },
       {
         name: "Vidux-720p",
@@ -68,6 +70,7 @@ test("component displays proper cameras informations in the list", () => {
         lastSeen: "2020-01-11 11:13",
         owner: "nmityok",
         capabilities: ["WDR", "720p", "PoE"],
+        serialNumber: "123456789SN",
       },
     ],
   };
@@ -78,6 +81,7 @@ test("component displays proper cameras informations in the list", () => {
     wrapper,
     "component-camlistcontainer-camlistitem"
   );
+
   componentsFound.forEach((cam) => {
     camOut.cameras.push({
       name: cam.prop("name"),
@@ -85,6 +89,7 @@ test("component displays proper cameras informations in the list", () => {
       firmware: cam.prop("firmware"),
       lastSeen: cam.prop("lastSeen"),
       owner: cam.prop("owner"),
+      serialNumber: cam.prop("serialNumber"),
       capabilities: cam.prop("capabilities"),
     });
   });

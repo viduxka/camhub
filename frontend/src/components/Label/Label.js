@@ -1,8 +1,8 @@
 import React from "react";
-import classes from "./Label.module.css";
+import Chip from '@material-ui/core/Chip';
 
 const Label = (props) => {
-  return <p className={classes.roundedLabel}>{props.children}</p>;
+  return <Chip data-test="component-cap-chip" label={props.children} style={{height: "18px", borderRadius: 6,background: "#808080", color: "white" }}/>;
 };
 
 export default Label;

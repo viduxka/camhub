@@ -27,8 +27,7 @@ const Discover = () => {
       variant="contained"
       classes={{ root: classes.root }}
       color="primary"
-      size="small"
-    >
+      size="small">
       Discover
     </Button>
   );

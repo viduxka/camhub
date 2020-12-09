@@ -4,11 +4,16 @@
   height: 40px;
 }
 
-.CameraTableHeader {
-  color: gray;
+.Normal {
+  background-color: #4b4c60;
 }
 
-.CamTableDataNormal {
+.Selected {
+  background-color: #FF990080;
+}
+
+.CameraTableHeader {
+  color: gray;
 }
 
 .CamTableDataLong {

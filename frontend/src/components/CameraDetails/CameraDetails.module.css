@@ -1,0 +1,12 @@
+.DetailsTitle {
+  font-weight: bold;
+  color: gray;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  line-height: 32px;
+}
+
+.DetailsProperties {
+  color: white;
+  font-weight: normal;
+}
