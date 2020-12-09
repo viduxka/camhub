@@ -71,10 +71,8 @@ class CamListContainer extends Component {
           idx={this.state.cameraSelected}
           name={this.state.cameras[selectedCamera].name}
           ip={this.state.cameras[selectedCamera].ip}
-          firmware={this.state.cameras[selectedCamera].firmware}
           lastSeen={this.state.cameras[selectedCamera].lastSeen}
           password={this.state.cameras[selectedCamera].password}
-          owner={this.state.cameras[selectedCamera].owner}
           serialNumber={this.state.cameras[selectedCamera].serialNumber}
           capabilities={this.state.cameras[selectedCamera].capabilities}
           _configLink={this.state.cameras[selectedCamera]._links.camConfig.href}
