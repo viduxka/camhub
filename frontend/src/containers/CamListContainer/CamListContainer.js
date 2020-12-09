@@ -37,7 +37,7 @@ class CamListContainer extends Component {
 
   selectCameraHandler = (index) => {
     this.setState({
-      cameraSelected: index,
+      cameraSelected: this.state.cameraSelected === index? -1 : index,
     });
   };
 
@@ -66,17 +66,21 @@ class CamListContainer extends Component {
   getCameraDetails() {
     const selectedCamera = this.state.cameraSelected;
     return (
-      <CameraDetails
-        idx={this.state.cameraSelected}
-        name={this.state.cameras[selectedCamera].name}
-        ip={this.state.cameras[selectedCamera].ip}
-        firmware={this.state.cameras[selectedCamera].firmware}
-        lastSeen={this.state.cameras[selectedCamera].lastSeen}
-        owner={this.state.cameras[selectedCamera].owner}
-        serialNumber={this.state.cameras[selectedCamera].serialNumber}
-        capabilities={this.state.cameras[selectedCamera].capabilities}
-        _configLink={this.state.cameras[selectedCamera]._links.camConfig.href}
-      />
+      <Grid item lg={3} xs={12} md={6}>
+        <CameraDetails
+          idx={this.state.cameraSelected}
+          name={this.state.cameras[selectedCamera].name}
+          ip={this.state.cameras[selectedCamera].ip}
+          firmware={this.state.cameras[selectedCamera].firmware}
+          lastSeen={this.state.cameras[selectedCamera].lastSeen}
+          password={this.state.cameras[selectedCamera].password}
+          owner={this.state.cameras[selectedCamera].owner}
+          serialNumber={this.state.cameras[selectedCamera].serialNumber}
+          capabilities={this.state.cameras[selectedCamera].capabilities}
+          _configLink={this.state.cameras[selectedCamera]._links.camConfig.href}
+        />  
+      </Grid>
+      
     );
   }
 
@@ -115,15 +119,15 @@ class CamListContainer extends Component {
 
     return (
       <Grid container justify="flex-start" alignItems="flex-start" direction="row">
-        <Grid item lg={9} xs={12}>
+        <Grid item lg={ cameraDetails === null ? 12 : 9} xs={12}>
           <table id="cameras" className={classes.CameraList}>
             {this.renderCameraListTableHeader()}
             <tbody>{this.renderCameraListTable()}</tbody>
           </table>
         </Grid>
-        <Grid item lg={3} xs={12} md={6}>
+
           {cameraDetails}
-        </Grid>
+
       </Grid>
     );
   }

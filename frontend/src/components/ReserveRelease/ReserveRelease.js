@@ -14,8 +14,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const ReserveRelease = () => {
   const classes = useStyles();
-  const onClickHandler = (event) => {
-  //TODO
+  const onClickHandler = e => {
+    e.stopPropagation();
+//TODO
   };
 
   return (
@@ -24,9 +25,7 @@ export const ReserveRelease = () => {
       classes={{ root: classes.root }}
       color="default"
       size="small"
-      onClick={(e) => {
-        onClickHandler.bind(this, e);
-      }}
+      onClick={onClickHandler}
     >
       Reserve
     </Button>

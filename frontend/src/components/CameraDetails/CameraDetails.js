@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CameraDetails = (props) => {
-  const columnNames = ["Name", "Camera IP", "Firmware", "Last seen", "Owner", "Serial number"];
+  const columnNames = ["Name", "Camera IP", "Firmware", "Last seen", "Password", "Owner", "Serial number"];
   const classOf = useStyles();
 
   const camData = [
@@ -29,6 +29,7 @@ const CameraDetails = (props) => {
     props.ip,
     props.firmware,
     props.lastSeen,
+    props.password,
     props.owner,
     props.serialNumber];
 
