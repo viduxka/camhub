@@ -40,26 +40,20 @@ class CameraScanViduxHelper implements CameraScan {
       String ip = array[3];
       String name = array[13];
 
-      if (sn.endsWith("[^0-9]")) {
-        sn = sn.substring(sn.length() - 10, sn.length() - 1);
-      } else {
-        sn = sn.substring(sn.length() - 9);
+      int endIndex = sn.length() - 1;
+      final char[] chars = sn.toCharArray();
+      while (chars[endIndex] > '9' || chars[endIndex] < '0') {
+        endIndex--;
       }
+      sn = sn.substring(endIndex - 8, endIndex + 1);
 
-      //      int a =0;
-      //      while (sn.substring(0,sn.length()-a).endsWith("[^0-9]")){
-      //        a++;
-      //      }
-      //      sn = sn.substring(sn.length() - 9-a, sn.length() -a);
-
-      rawCameraSet.add(RawCameraData.builder()
+      rawCameraSet.add(
+          RawCameraData.builder()
               .name(name)
               .firmware(firmware)
               .ipAddress(ip)
               .serialNumber(sn)
               .build());
-
-      //rawCameraSet.add(new RawCameraData(name, firmware, ip, sn));
     }
     return CompletableFuture.completedFuture(rawCameraSet);
   }
