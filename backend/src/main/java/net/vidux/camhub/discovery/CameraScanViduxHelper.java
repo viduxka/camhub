@@ -10,49 +10,63 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 class CameraScanViduxHelper implements CameraScan {
-  @Override
-  public CompletableFuture<Set<RawCameraData>> scanCams() {
-    List<String> list = new ArrayList<>();
-    Set<RawCameraData> rawCameraSet = new HashSet<>();
-    try {
-      ProcessBuilder builder = new ProcessBuilder();
-      builder.command("vidux-helper", "system", "findHikvisionIPCameras");
-      Process process = builder.start();
-      new StreamGobbler(process.getInputStream(), list::add).run();
 
-      if (!process.waitFor(10, TimeUnit.SECONDS)) {
-        process.destroy();
-        throw new TimeoutException("Timeout");
-      }
+  String[] splitRawCameras(String rawCameraLine) {
+    return rawCameraLine.split("\\t");
+  }
 
-      if (process.waitFor() != 0) {
-        throw new IOException("Cant run command");
-      }
+  String getSerialNumber(String productNumber) {
+    int endIndex = productNumber.length() - 1;
+    final char[] chars = productNumber.toCharArray();
+    while (chars[endIndex] > '9' || chars[endIndex] < '0') {
+      endIndex--;
+    }
+    return productNumber.substring(endIndex - 8, endIndex + 1);
+  }
 
-    } catch (Exception e) {
-      System.err.println(e);
+  List<String> callViduxHelper() throws TimeoutException, IOException, InterruptedException {
+    List<String> rawCameraLineList = new ArrayList<>();
+
+    ProcessBuilder builder = new ProcessBuilder();
+    builder.command("vidux-helper", "system", "findHikvisionIPCameras");
+    Process process = builder.start();
+    new StreamGobbler(process.getInputStream(), rawCameraLineList::add).run();
+
+    if (!process.waitFor(10, TimeUnit.SECONDS)) {
+      process.destroy();
+      throw new TimeoutException("Timeout! The process did not finish in 10 seconds.");
     }
 
-    for (String s : list) {
-      String[] array = s.split("\\t");
-      String sn = array[1];
-      String firmware = array[2];
-      String ip = array[3];
-      String name = array[13];
+    if (process.waitFor() != 0) {
+      throw new IOException("Could not run vidux-helper command properly.");
+    }
 
-      int endIndex = sn.length() - 1;
-      final char[] chars = sn.toCharArray();
-      while (chars[endIndex] > '9' || chars[endIndex] < '0') {
-        endIndex--;
-      }
-      sn = sn.substring(endIndex - 8, endIndex + 1);
+    return rawCameraLineList;
+  }
+
+  @Override
+  public CompletableFuture<Set<RawCameraData>> scanCams() {
+    List<String> rawCameraLineList;
+    Set<RawCameraData> rawCameraSet = new HashSet<>();
+    try {
+      rawCameraLineList = callViduxHelper();
+    } catch (Exception e) {
+      return CompletableFuture.failedFuture(e);
+    }
+
+    for (String rawCameraLine : rawCameraLineList) {
+      String[] cameraInfo = splitRawCameras(rawCameraLine);
+      String serialNumber = getSerialNumber(cameraInfo[1]);
+      String firmware = cameraInfo[2];
+      String ip = cameraInfo[3];
+      String name = cameraInfo[13];
 
       rawCameraSet.add(
           RawCameraData.builder()
               .name(name)
               .firmware(firmware)
               .ipAddress(ip)
-              .serialNumber(sn)
+              .serialNumber(serialNumber)
               .build());
     }
     return CompletableFuture.completedFuture(rawCameraSet);
