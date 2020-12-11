@@ -16,6 +16,8 @@ class StreamGobbler implements Runnable {
 
   @Override
   public void run() {
-    new BufferedReader(new InputStreamReader(inputStream)).lines().forEach(consumer);
+    if (inputStream != null && consumer != null) {
+      new BufferedReader(new InputStreamReader(inputStream)).lines().forEach(consumer);
+    }
   }
 }
