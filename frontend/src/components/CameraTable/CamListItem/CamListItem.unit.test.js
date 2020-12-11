@@ -1,7 +1,7 @@
 import { shallow } from "enzyme";
-import { ReserveRelease } from "../ReserveRelease/ReserveRelease";
+import { ReserveRelease } from "../../../components/ReserveRelease/ReserveRelease";
 import CamListItem  from './CamListItem';
-import { findByTestAttr } from '../../test/testUtils';
+import { findByTestAttr } from '../../../test/testUtils';
 
 
 let wrapper = null;
@@ -40,7 +40,8 @@ describe('<CamListItem> component is rendered with...', () => {
   };
 
   test("proper 'name' property", () => {
-    check('name');
+    const comp = findByTestAttr(wrapper, "component-camlistitem-tt-name");
+    expect(comp.prop("name")).toBe(testProps["name"]);
   });
   
   test("proper 'ip' property", () => {

@@ -7,7 +7,7 @@ class App extends Component{
   render(){
     return (
       <Layout>
-        <CamListContainer />
+        <CamListContainer/>
       </Layout> 
   );
   }

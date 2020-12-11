@@ -1,5 +1,6 @@
 import React from "react";
 import Capability from "../Capability/Capability";
+import PropTypes from 'prop-types';
 
 const CapabilityTable = (props) => {
   let capTable = null;
@@ -17,6 +18,10 @@ const CapabilityTable = (props) => {
       </tbody>
     </table>
   );
+};
+
+CapabilityTable.propTypes = {
+  table: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default CapabilityTable;

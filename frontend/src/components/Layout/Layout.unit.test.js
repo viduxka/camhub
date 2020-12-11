@@ -5,9 +5,8 @@ test("Layout renders without error",() => {
   shallow(<Layout/>);
 });
 
-test("Layout renders with proper children",() => {
+test("Layout renders main with proper children",() => {
   const inText = "Test";
   const wrapper = shallow(<Layout>{inText}</Layout>);
-  expect(wrapper.find('div')).toHaveLength(1);
   expect(wrapper.find('main').children().text()).toEqual(inText); 
 });
