@@ -1,5 +1,7 @@
 package net.vidux.camhub.discovery;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -48,5 +50,20 @@ class CameraScanTest {
     getSerialNumberTest("ABCDEC23456789", "C23456789");
     getSerialNumberTest("ABCDE123456789", "123456789");
     getSerialNumberTest("ABCDEC23456789ABC", "C23456789");
+  }
+
+  @Test
+  void streamGobblerTest() {
+    List<String> list = new ArrayList<>();
+    String expected = "HelloWorld";
+    try {
+      ProcessBuilder builder = new ProcessBuilder();
+      builder.command("echo", "HelloWorld");
+      Process process = builder.start();
+      new StreamGobbler(process.getInputStream(), list::add).run();
+    } catch (Exception e) {
+      System.err.println(e);
+    }
+    Assertions.assertEquals(expected, list.get(0));
   }
 }

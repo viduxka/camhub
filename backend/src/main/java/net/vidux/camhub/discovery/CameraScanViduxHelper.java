@@ -24,32 +24,25 @@ class CameraScanViduxHelper implements CameraScan {
     return productNumber.substring(endIndex - 8, endIndex + 1);
   }
 
-  List<String> callViduxHelper() throws TimeoutException, IOException, InterruptedException {
-    List<String> rawCameraLineList = new ArrayList<>();
-
-    ProcessBuilder builder = new ProcessBuilder();
-    builder.command("vidux-helper", "system", "findHikvisionIPCameras");
-    Process process = builder.start();
-    new StreamGobbler(process.getInputStream(), rawCameraLineList::add).run();
-
-    if (!process.waitFor(10, TimeUnit.SECONDS)) {
-      process.destroy();
-      throw new TimeoutException("Timeout! The process did not finish in 10 seconds.");
-    }
-
-    if (process.waitFor() != 0) {
-      throw new IOException("Could not run vidux-helper command properly.");
-    }
-
-    return rawCameraLineList;
-  }
-
   @Override
   public CompletableFuture<Set<RawCameraData>> scanCams() {
-    List<String> rawCameraLineList;
+    List<String> rawCameraLineList = new ArrayList<>();
     Set<RawCameraData> rawCameraSet = new HashSet<>();
     try {
-      rawCameraLineList = callViduxHelper();
+      ProcessBuilder builder = new ProcessBuilder();
+      builder.command("vidux-helper", "system", "findHikvisionIPCameras");
+      Process process = builder.start();
+      new StreamGobbler(process.getInputStream(), rawCameraLineList::add).run();
+
+      if (!process.waitFor(10, TimeUnit.SECONDS)) {
+        process.destroy();
+        throw new TimeoutException("Timeout! The process did not finish in 10 seconds.");
+      }
+
+      if (process.waitFor() != 0) {
+        throw new IOException("Could not run vidux-helper command properly.");
+      }
+
     } catch (Exception e) {
       return CompletableFuture.failedFuture(e);
     }
