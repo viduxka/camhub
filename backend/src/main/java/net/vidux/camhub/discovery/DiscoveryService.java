@@ -1,5 +1,7 @@
 package net.vidux.camhub.discovery;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +10,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Component
 public class DiscoveryService {
+  protected static Logger log = LoggerFactory.getLogger(DiscoveryService.class.getName());
 
   CompletableFuture<Set<RawCameraData>> cameraScanTask;
 
@@ -23,11 +26,11 @@ public class DiscoveryService {
   }
 
   void discover() {
-    cameraScanTask = cameraScan.scanCams();
+    cameraScanTask = cameraScan.cameraScanTask();
     cameraScanTask.thenAccept(this::publishRawCameraData);
     cameraScanTask.exceptionally(
         th -> {
-          System.err.println(th.getMessage());
+          log.warn(th.getMessage());
           return null;
         });
   }

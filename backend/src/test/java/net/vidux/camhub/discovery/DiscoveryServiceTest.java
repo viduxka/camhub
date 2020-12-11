@@ -2,65 +2,57 @@ package net.vidux.camhub.discovery;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class DiscoveryServiceTest {
+
+  @Mock CompletableFuture<Set<RawCameraData>> cameraScanTask;
+
+  @InjectMocks @Spy DiscoveryService spiedDiscover;
 
   @Test
   void requestDiscoverTestWhenScanIsRunning() {
-    CompletableFuture<Set<RawCameraData>> mockCameraScanTask =
-        (CompletableFuture<Set<RawCameraData>>) mock(CompletableFuture.class);
-    when(mockCameraScanTask.isDone())
+    when(cameraScanTask.isDone())
         .thenAnswer(
             invocation -> {
               return false;
             });
 
-    DiscoveryService discoveryService = new DiscoveryService();
-
-    DiscoveryService mockDiscover = spy(discoveryService);
-    doNothing().when(mockDiscover).discover();
-
-    mockDiscover.cameraScanTask = mockCameraScanTask;
-
-    Assertions.assertThrows(DiscoveryException.class, mockDiscover::requestDiscovery);
+    Assertions.assertThrows(DiscoveryException.class, spiedDiscover::requestDiscovery);
   }
 
   @Test
   void requestDiscoverTestWhenNoScanIsRunning() {
-    DiscoveryService discoveryService = new DiscoveryService();
-    DiscoveryService mockDiscover = spy(discoveryService);
-    doNothing().when(mockDiscover).discover();
-    discoveryService.cameraScanTask = null;
+    doNothing().when(spiedDiscover).discover();
+    spiedDiscover.cameraScanTask = null;
 
-    Assertions.assertDoesNotThrow(mockDiscover::requestDiscovery);
-    verify(mockDiscover, times(1)).discover();
+    Assertions.assertDoesNotThrow(spiedDiscover::requestDiscovery);
+    verify(spiedDiscover, times(1)).discover();
   }
 
   @Test
   void requestDiscoverTestWhenScanIsDone() {
-    CompletableFuture<Set<RawCameraData>> mockCameraScanTask =
-        (CompletableFuture<Set<RawCameraData>>) mock(CompletableFuture.class);
-    when(mockCameraScanTask.isDone())
+    when(cameraScanTask.isDone())
         .thenAnswer(
             invocation -> {
               return true;
             });
-    DiscoveryService discoveryService = new DiscoveryService();
-    DiscoveryService mockDiscover = spy(discoveryService);
-    doNothing().when(mockDiscover).discover();
-    mockDiscover.cameraScanTask = mockCameraScanTask;
+    doNothing().when(spiedDiscover).discover();
 
-    Assertions.assertDoesNotThrow(mockDiscover::requestDiscovery);
-    verify(mockDiscover, times(1)).discover();
+    Assertions.assertDoesNotThrow(spiedDiscover::requestDiscovery);
+    verify(spiedDiscover, times(1)).discover();
   }
 }

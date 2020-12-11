@@ -7,5 +7,5 @@ import java.util.concurrent.CompletableFuture;
 
 interface CameraScan {
   @Async
-  CompletableFuture<Set<RawCameraData>> scanCams();
+  CompletableFuture<Set<RawCameraData>> cameraScanTask();
 }
