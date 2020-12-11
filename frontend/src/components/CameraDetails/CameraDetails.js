@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from '@material-ui/core/styles';
 import CameraCapabilityTable from './CameraCapabilityTable/CameraCapabilityTable';
 import CameraDetailsTable from "./CameraDetailsTable/CameraDetailsTable";
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -38,10 +39,21 @@ const CameraDetails = (props) => {
     <div className={classes.DetailsContainer}>
       <div className={classes.DetailsTitle}>Details</div>
       <CameraDetailsTable columnNames={columnNames} camData={camData}/>
-      <CameraCapabilityTable capabilityArray={capabilities}/>
+      <CameraCapabilityTable capabilityArray={capabilities} />
       <Button target="_blank" className={classOf.button} variant="outlined" color="primary" href={_configLink}><u>Camera config</u></Button>
     </div>
   );
+};
+
+CameraDetails.propTypes = {
+  idx: PropTypes.number,
+  name: PropTypes.string,
+  ip: PropTypes.string,
+  lastSeen: PropTypes.string,
+  password: PropTypes.string,
+  serialNumber: PropTypes.string,
+  capabilities: PropTypes.arrayOf(PropTypes.string),
+  _configLink: PropTypes.string,
 };
 
 export default CameraDetails;

@@ -1,4 +1,4 @@
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import { findByTestAttr } from "../../test/testUtils";
 import CameraTable from './CameraTable';
 

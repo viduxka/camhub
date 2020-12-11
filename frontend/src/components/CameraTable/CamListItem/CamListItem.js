@@ -3,6 +3,8 @@ import classes from "./CamListItem.module.css";
 import CapabilityTable from "../../CapabilityTable/CapabilityTable";
 import { ReserveRelease as ReserveReleaseBtn } from "../../ReserveRelease/ReserveRelease";
 import TableToolTipWrapper from "../../TableTooltipWrapper/TableToolTipWrapper";
+import PropTypes from 'prop-types';
+import Capability from '../../Capability/Capability';
 
 const CamListItem = (props) => {
   const {selected, idx, name, ip, firmware, lastSeen, owner, capabilities, onClick} = props;
@@ -25,6 +27,18 @@ const CamListItem = (props) => {
       </td>
     </tr>
   );
+};
+
+CamListItem.propTypes = {
+  selected: PropTypes.bool,
+  idx: PropTypes.number,
+  name: PropTypes.string,
+  ip: PropTypes.string,
+  firmware: PropTypes.string,
+  lastSeen: PropTypes.string,
+  owner: PropTypes.string,
+  capabilities: PropTypes.arrayOf(Capability),
+  onClick: PropTypes.func,
 };
 
 export default CamListItem;

@@ -2,6 +2,7 @@ import { React } from "react";
 import classes from "../../containers/CamListContainer/CamListContainer.module.css";
 import CamListItem from "./CamListItem/CamListItem";
 import Grid from "@material-ui/core/Grid";
+import PropTypes from 'prop-types';
 
 const CameraTable = (props) => {
   const TABLE_FIELDS = [
@@ -71,6 +72,26 @@ const CameraTable = (props) => {
   };
 
   return renderCameraList(props.selectedCamera === -1);
+};
+
+CameraTable.propTypes = {
+  cameras: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string, 
+    ip: PropTypes.string,
+    lastSeen: PropTypes.string,
+    password: PropTypes.string,
+    owner: PropTypes.string,
+    capabilities: PropTypes.arrayOf(PropTypes.string),
+    serialNumber: PropTypes.string,
+    _links: PropTypes.shape({
+      camconfig: PropTypes.shape({
+        href: PropTypes.string,
+      }),
+    }),
+  })   
+  ),
+  selectedCamera: PropTypes.number,
+  selectCameraHandler: PropTypes.func,
 };
 
 export default CameraTable;

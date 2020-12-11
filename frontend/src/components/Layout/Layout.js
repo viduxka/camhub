@@ -1,10 +1,15 @@
 import React, { Fragment } from "react";
 import classes from "./Layout.module.css";
+import PropTypes from 'prop-types';
 
-const layout = (props) => (
+const Layout = (props) => (
   <Fragment>
     <main className={classes.Content}>{props.children}</main>
   </Fragment>
 );
 
-export default layout;
+Layout.propTypes = {
+  children: PropTypes.any,
+};
+
+export default Layout;

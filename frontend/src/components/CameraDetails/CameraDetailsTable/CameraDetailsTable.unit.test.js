@@ -1,4 +1,3 @@
-import { ContactSupportOutlined } from "@material-ui/icons";
 import { shallow } from "enzyme";
 import { findByTestAttr } from "../../../test/testUtils";
 import CameraDetailsTable from './CameraDetailsTable';
@@ -14,7 +13,7 @@ const camData = [
   ];
 
 test("<CameraDetailsTable> is rendering wothout error", ()=>{
-  shallow(<CameraDetailsTable columnNames={["name"]} camData={"test name"}/>);
+  shallow(<CameraDetailsTable columnNames={columnNames} camData={camData}/>);
 });
 
 test("camera table is rendering every camera property",()=>{
@@ -24,6 +23,3 @@ test("camera table is rendering every camera property",()=>{
     expect(camData).toContain(item.text());
   });
 });
-
-
-
