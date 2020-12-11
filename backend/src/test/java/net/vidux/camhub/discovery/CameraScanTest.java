@@ -1,8 +1,10 @@
 package net.vidux.camhub.discovery;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -65,5 +67,36 @@ class CameraScanTest {
       System.err.println(e);
     }
     Assertions.assertEquals(expected, list.get(0));
+  }
+
+  @Test
+  void incorrectCommandTest() {
+    List<String> list = new ArrayList<>();
+    try {
+      ProcessBuilder builder = new ProcessBuilder();
+      builder.command("ech", "HelloWorld");
+      Process process = builder.start();
+      new StreamGobbler(process.getInputStream(), list::add).run();
+      Assertions.assertNotEquals(0,process.waitFor());
+
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }
+
+  @Test
+  void timeOutTest() {
+    List<String> list = new ArrayList<>();
+    try {
+      ProcessBuilder builder = new ProcessBuilder();
+      builder.command("echo", "HelloWorld");
+      Process process = builder.start();
+      new StreamGobbler(process.getInputStream(), list::add).run();
+      process.wait(1000);
+      Assertions.assertFalse(process.waitFor(10, TimeUnit.MILLISECONDS));
+
+    } catch (Exception e) {
+      System.out.println(e);
+    }
   }
 }
