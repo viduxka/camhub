@@ -3,21 +3,22 @@ package net.vidux.camhub.discovery;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import lombok.NonNull;
 
-class StreamGobbler implements Runnable {
+class StreamGobbler implements Callable<List<String>> {
   private InputStream inputStream;
-  private Consumer<String> consumer;
 
-  public StreamGobbler(InputStream inputStream, Consumer<String> consumer) {
+  public StreamGobbler(@NonNull InputStream inputStream) {
     this.inputStream = inputStream;
-    this.consumer = consumer;
   }
 
   @Override
-  public void run() {
-    if (inputStream != null && consumer != null) {
-      new BufferedReader(new InputStreamReader(inputStream)).lines().forEach(consumer);
-    }
+  public List<String> call() {
+    List<String> list = new ArrayList<>();
+    new BufferedReader(new InputStreamReader(inputStream)).lines().forEach(list::add);
+    return list;
   }
 }

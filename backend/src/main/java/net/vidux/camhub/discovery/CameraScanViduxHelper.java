@@ -6,23 +6,29 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 class CameraScanViduxHelper implements CameraScan {
+
+  @Autowired private ViduxHelperWrapper viduxHelperWrapper;
+
+  @Autowired private RawCameraDataFactory rawCameraDataFactory;
 
   @Override
   public CompletableFuture<Set<RawCameraData>> scanCams() {
     List<String> rawCameraLineList;
     try {
-      rawCameraLineList = new ViduxHelperRunner().callViduxHelper();
+      rawCameraLineList = viduxHelperWrapper.findHikvisionIpCameras();
     } catch (IOException | TimeoutException e) {
       return CompletableFuture.failedFuture(e);
     }
 
-    Set<RawCameraData> rawCameraSet = new HashSet<>();
-    RawCameraDataFactory factory = new RawCameraDataFactory();
-    for (String rawCameraLine : rawCameraLineList) {
-      rawCameraSet.add(factory.createRawCameraData(rawCameraLine));
-    }
-    return CompletableFuture.completedFuture(rawCameraSet);
+    return CompletableFuture.completedFuture(
+        rawCameraLineList.stream()
+            .map(rawCameraDataFactory::createRawCameraData)
+            .collect(Collectors.toCollection(HashSet::new)));
   }
 }
