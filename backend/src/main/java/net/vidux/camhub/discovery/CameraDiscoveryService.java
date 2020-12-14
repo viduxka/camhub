@@ -18,11 +18,15 @@ public class CameraDiscoveryService {
 
   @Autowired private CameraScan cameraScan;
 
-  public void requestDiscovery() throws DiscoveryException {
-    if (cameraScanTask != null && !cameraScanTask.isDone()) {
-      throw new DiscoveryException("Camera Scan task is already running");
+  public void requestDiscovery() throws CameraDiscoveryException {
+    if (isCameraScanTaskRunning()) {
+      throw new CameraDiscoveryException("Camera Scan task is already running");
     }
     discover();
+  }
+
+  public boolean isCameraScanTaskRunning(){
+    return (cameraScanTask != null && !cameraScanTask.isDone());
   }
 
   void discover() {
