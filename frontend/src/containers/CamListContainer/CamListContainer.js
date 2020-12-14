@@ -2,17 +2,35 @@ import React, { Component } from "react";
 import CameraDetails from "../../components/CameraDetails/CameraDetails";
 import Grid from "@material-ui/core/Grid";
 import CameraTable from '../../components/CameraTable/CameraTable';
+import SnackBar from '../../components/SnackBar/SnackBar';
 
-const BASE_URL = process.env.REACT_APP_SERVER+"/api/v1/cameras";
+const GET_CAMERAS = process.env.REACT_APP_SERVER+"/api/v1/cameras";
 
 class CamListContainer extends Component {
   state = {
     cameras: [],
-    cameraSelected: -1,
+    cameraSelected : -1,
+    alert:{
+      open:false,
+      message: "",
+      backgroundColor: "",
+    },
   };
 
+  setAlert = (message, backgroundColor) => {
+    this.setState({
+      alert: {
+        open: true, 
+        message,
+        backgroundColor
+      },
+    });
+  };
+
+  closeAlert = () => this.setState({alert: {open: false}});
+
   componentDidMount() {
-    fetch(BASE_URL)
+    fetch(GET_CAMERAS)
       .then((response) => response.json())
       .then((json) => {
         this.setState({ cameras: json._embedded.cameras });
@@ -53,6 +71,8 @@ class CamListContainer extends Component {
   }  
 
   render() {
+    const {cameras,cameraSelected,alert}=this.state;
+    const {open,message,backgroundColor}=alert;
     return (
       <Grid
         container
@@ -60,9 +80,17 @@ class CamListContainer extends Component {
         alignItems="flex-start"
         direction="row"
       >
-        <CameraTable cameras={this.state.cameras} selectedCamera={this.state.cameraSelected} selectCameraHandler={this.selectCameraHandler}/>
+        <CameraTable cameras={cameras} 
+          selectedCamera={cameraSelected} 
+          selectCameraHandler={this.selectCameraHandler} 
+          setAlert={this.setAlert}/>
         {this.getCameraDetails()}
-      </Grid>
+        <SnackBar
+          open={open}
+          message={message}
+          onCloseAlert={this.closeAlert}
+          backgroundColor={backgroundColor}/>
+      </Grid>      
     );
   }
 }
