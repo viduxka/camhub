@@ -9,8 +9,8 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @Component
-public class DiscoveryService {
-  protected static Logger log = LoggerFactory.getLogger(DiscoveryService.class.getName());
+public class CameraDiscoveryService {
+  protected static Logger log = LoggerFactory.getLogger(CameraDiscoveryService.class.getName());
 
   CompletableFuture<Set<RawCameraData>> cameraScanTask;
 
