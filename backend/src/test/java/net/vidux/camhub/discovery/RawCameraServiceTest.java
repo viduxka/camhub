@@ -16,7 +16,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class RawCameraDataProcessingTest {
+class RawCameraServiceTest {
 
   @Mock
   CameraRepository mockCameraRepository;
@@ -25,7 +25,7 @@ class RawCameraDataProcessingTest {
   CameraFactory fakeCameraFactory;
 
   @InjectMocks
-  RawCameraDataProcessing rawCameraDataProcessing;
+  RawCameraService rawCameraService;
 
   @Test
   void processRawCameraDataTestNewCamera(){
@@ -48,7 +48,7 @@ class RawCameraDataProcessingTest {
                       return fakeCam;
                     });
 
-    rawCameraDataProcessing.processRawCameraData(fakeRawCameraData, timeStamp);
+    rawCameraService.processRawCameraData(fakeRawCameraData, timeStamp);
 
     verify(fakeCameraFactory, times(1)).createCameraFromRawCameraDataAndTimeStamp(fakeRawCameraData, timeStamp);
     verify(mockCameraRepository, times(1)).save(fakeCam);
@@ -70,7 +70,7 @@ class RawCameraDataProcessingTest {
                     });
     Instant timeStamp = Instant.now();
 
-    rawCameraDataProcessing.processRawCameraData(fakeRawCameraData, timeStamp);
+    rawCameraService.processRawCameraData(fakeRawCameraData, timeStamp);
 
     verify(fakeCam, times(1)).setLastSeen(timeStamp);
     verify(mockCameraRepository, times(1)).save(fakeCam);

@@ -8,7 +8,11 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 
 @Component
-class RawCameraDataProcessing {
+class RawCameraService {
+
+  private CameraFactory cameraFactory;
+
+  private CameraRepository cameraRepository;
 
   @Autowired
   CameraFactory cameraFactory;

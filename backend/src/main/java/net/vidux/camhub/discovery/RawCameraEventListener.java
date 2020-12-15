@@ -10,12 +10,13 @@ import java.time.Instant;
 @Component
 public class RawCameraEventListener {
 
-  @Autowired RawCameraDataProcessing rawCameraDataProcessing;
+  @Autowired
+  RawCameraService rawCameraService;
 
   @Async
   @EventListener
   void handleRawCameraEvent(RawCameraEvent cameraEvent) {
-    rawCameraDataProcessing.processRawCameraData(
+    rawCameraService.processRawCameraData(
         cameraEvent.getRawCameraData(), Instant.ofEpochMilli(cameraEvent.getTimestamp()));
   }
 }
