@@ -7,10 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 class RawCameraEventPublisher {
 
-    @Autowired
-    private ApplicationEventPublisher eventPublisher;
+  @Autowired private ApplicationEventPublisher eventPublisher;
 
-    public void publishRawCameraEvent(RawCameraData rawCameraData) {
-        eventPublisher.publishEvent(new RawCameraEvent(rawCameraData));
-    }
+  public void publishRawCameraEvent(RawCameraData rawCameraData) {
+    eventPublisher.publishEvent(new RawCameraEvent(this, rawCameraData));
+  }
 }

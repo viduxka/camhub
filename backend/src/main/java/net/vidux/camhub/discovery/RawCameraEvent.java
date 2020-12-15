@@ -1,9 +1,14 @@
 package net.vidux.camhub.discovery;
 
-class RawCameraEvent {
-  private RawCameraData rawcameraData;
+import lombok.Getter;
+import org.springframework.context.ApplicationEvent;
 
-  public RawCameraEvent(RawCameraData rawCameraData) {
-    this.rawcameraData = rawCameraData;
+@Getter
+class RawCameraEvent extends ApplicationEvent {
+  private transient RawCameraData rawCameraData;
+
+  public RawCameraEvent(Object source, RawCameraData rawCameraData) {
+    super(source);
+    this.rawCameraData = rawCameraData;
   }
 }
