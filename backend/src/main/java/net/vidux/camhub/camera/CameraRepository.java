@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CameraRepository extends JpaRepository<Camera, String> {
+  Camera findBySerialNumber(String serialNumber);
 }
