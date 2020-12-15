@@ -8,7 +8,8 @@ import java.time.Instant;
 
 @Component
 class CameraFactory {
-  Camera createCameraFromRawCameraDataAndTimeStamp(@NonNull RawCameraData rawCameraData, @NonNull Instant timestamp) {
+  Camera createCameraFromRawCameraDataAndTimeStamp(
+      @NonNull RawCameraData rawCameraData, @NonNull Instant timestamp) {
     return Camera.builder()
         .name(rawCameraData.getName())
         .ip(rawCameraData.getIpAddress())
@@ -18,7 +19,8 @@ class CameraFactory {
         .serialNumber(rawCameraData.getSerialNumber())
         .build();
   }
-  private String generatePasswordFromSerialNumber(String serialNumber){
-    return "Vidux" + serialNumber.substring(serialNumber.length() - 9);
+
+  private String generatePasswordFromSerialNumber(String serialNumber) {
+    return "Vidux" + serialNumber;
   }
 }
