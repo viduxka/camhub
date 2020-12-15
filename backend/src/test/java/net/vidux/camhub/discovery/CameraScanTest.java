@@ -1,5 +1,6 @@
 package net.vidux.camhub.discovery;
 
+import static org.mockito.ArgumentMatchers.anyChar;
 import static org.mockito.ArgumentMatchers.anyString;
 
 import java.io.IOException;
@@ -8,21 +9,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeoutException;
+import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class CameraScanTest {
 
-  @Mock ViduxHelperWrapper mockedViduxHelperWrapper = new ViduxHelperWrapper();
-  @Mock RawCameraDataFactory mockedRawCameraDataFactory = new RawCameraDataFactory();
+  @Mock ViduxHelperWrapper mockedViduxHelperWrapper;
+  @Mock RawCameraDataFactory mockedRawCameraDataFactory;
 
-  @InjectMocks CameraScan cameraScan = new CameraScanViduxHelper();
+  @InjectMocks CameraScanViduxHelper cameraScan;
+
+  @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
 
   @Test
   void testCameraScanViduxHelper() {
@@ -44,6 +50,7 @@ class CameraScanTest {
           .thenCallRealMethod();
       Mockito.when(mockedRawCameraDataFactory.extractSerialNumber(anyString()))
           .thenCallRealMethod();
+      Mockito.when(mockedRawCameraDataFactory.isDigit(anyChar())).thenCallRealMethod();
       Set<RawCameraData> set = cameraScan.scanCams().getNow(new HashSet<>());
 
       Assertions.assertEquals(expectedSet, set);
