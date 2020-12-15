@@ -7,15 +7,24 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 class CameraScanViduxHelper implements CameraScan {
 
-  @Autowired private ViduxHelperWrapper viduxHelperWrapper;
+  private final ViduxHelperWrapper viduxHelperWrapper;
 
-  @Autowired private RawCameraDataFactory rawCameraDataFactory;
+  private final RawCameraDataFactory rawCameraDataFactory;
+
+  @Autowired
+  public CameraScanViduxHelper(
+      @NonNull ViduxHelperWrapper viduxHelperWrapper,
+      @NonNull RawCameraDataFactory rawCameraDataFactory) {
+    this.viduxHelperWrapper = viduxHelperWrapper;
+    this.rawCameraDataFactory = rawCameraDataFactory;
+  }
 
   @Override
   public CompletableFuture<Set<RawCameraData>> scanCams() {

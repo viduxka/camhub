@@ -1,26 +1,24 @@
 package net.vidux.camhub.discovery;
 
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
 class RawCameraDataFactory {
-  private static final String REGEX = "\\t";
+  private static final String RAW_CAMERA_LINE_SEPARATOR = "\\t";
 
-  boolean isNotDigitAtEnd(char character) {
-    return character > '9' || character < '0';
+  boolean isDigit(char character) {
+    return character <= '9' && character >= '0';
   }
 
-  String extractSerialNumber(String productNumber) {
-    if (productNumber == null) {
-      return null;
-    }
+  String extractSerialNumber(@NonNull String productNumber) {
     if (productNumber.length() < 9) {
       return null;
     }
 
     int endIndex = productNumber.length() - 1;
     final char[] chars = productNumber.toCharArray();
-    while (isNotDigitAtEnd(chars[endIndex])) {
+    while (!isDigit(chars[endIndex])) {
       endIndex--;
     }
     if (endIndex < 9) {
@@ -29,23 +27,16 @@ class RawCameraDataFactory {
     return productNumber.substring(endIndex - 8, endIndex + 1);
   }
 
-  RawCameraData createRawCameraData(String rawCameraLine) {
-    if (rawCameraLine == null) {
-      return null;
-    }
-    String[] cameraInfo = rawCameraLine.split(REGEX);
+  RawCameraData createRawCameraData(@NonNull String rawCameraLine) {
+    String[] cameraInfo = rawCameraLine.split(RAW_CAMERA_LINE_SEPARATOR);
     if (cameraInfo.length < 14) {
       return null;
     }
-    String serialNumber = extractSerialNumber(cameraInfo[1]);
-    String firmware = cameraInfo[2];
-    String ip = cameraInfo[3];
-    String name = cameraInfo[13];
     return RawCameraData.builder()
-        .name(name)
-        .firmware(firmware)
-        .ipAddress(ip)
-        .serialNumber(serialNumber)
+        .name(cameraInfo[13])
+        .firmware(cameraInfo[2])
+        .ipAddress(cameraInfo[3])
+        .serialNumber(extractSerialNumber(cameraInfo[1]))
         .build();
   }
 }

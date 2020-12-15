@@ -17,7 +17,6 @@ class RawCameraDataFactoryTest {
                 + "\t::\t::\t64\t95\t0\t1\n",
             new RawCameraData(
                 "VDX-OD-6MP-ML-IR-WDR", "94-e1-ac-d1-2a-44", "10.30.0.51", "C28752138")),
-        Arguments.of(null, null),
         Arguments.of("", null),
         Arguments.of("VDX\t1234\t10.10.0.1", null));
   }
@@ -40,8 +39,7 @@ class RawCameraDataFactoryTest {
         Arguments.of("23456789B", null),
         Arguments.of("ABCDEC23456789ABC", "C23456789"),
         Arguments.of("ABC", null),
-        Arguments.of("", null),
-        Arguments.of(null, null));
+        Arguments.of("", null));
   }
 
   @ParameterizedTest
