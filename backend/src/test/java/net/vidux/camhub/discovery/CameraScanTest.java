@@ -1,5 +1,7 @@
 package net.vidux.camhub.discovery;
 
+import static org.mockito.ArgumentMatchers.anyString;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +24,7 @@ class CameraScanTest {
 
   @InjectMocks CameraScan cameraScan = new CameraScanViduxHelper();
 
-  @Test //WIP
+  @Test
   void testCameraScanViduxHelper() {
     List<String> fakeCameras = new ArrayList<>();
     String camera =
@@ -38,11 +40,14 @@ class CameraScanTest {
     expectedSet.add(rawCameraData);
     try {
       Mockito.when(mockedViduxHelperWrapper.findHikvisionIpCameras()).thenReturn(fakeCameras);
-      Mockito.when(mockedRawCameraDataFactory.createRawCameraData(camera))
-          .thenReturn(rawCameraData);
+      Mockito.when(mockedRawCameraDataFactory.createRawCameraData(anyString()))
+          .thenCallRealMethod();
+      Mockito.when(mockedRawCameraDataFactory.extractSerialNumber(anyString()))
+          .thenCallRealMethod();
       Set<RawCameraData> set = cameraScan.scanCams().getNow(new HashSet<>());
-      Assertions.assertEquals(expectedSet.size(), set.size());
-      Assertions.assertEquals(expectedSet,set);
+
+      Assertions.assertEquals(expectedSet, set);
+
     } catch (IOException | TimeoutException e) {
       System.err.println(e);
     }

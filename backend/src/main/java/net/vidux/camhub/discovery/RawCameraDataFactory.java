@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 class RawCameraDataFactory {
   private static final String REGEX = "\\t";
 
-  boolean isNotDigitChar(char character) {
+  boolean isNotDigitAtEnd(char character) {
     return character > '9' || character < '0';
   }
 
@@ -20,8 +20,11 @@ class RawCameraDataFactory {
 
     int endIndex = productNumber.length() - 1;
     final char[] chars = productNumber.toCharArray();
-    while (isNotDigitChar(chars[endIndex])) {
+    while (isNotDigitAtEnd(chars[endIndex])) {
       endIndex--;
+    }
+    if (endIndex < 9) {
+      return null;
     }
     return productNumber.substring(endIndex - 8, endIndex + 1);
   }

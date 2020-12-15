@@ -30,18 +30,14 @@ class RawCameraDataFactoryTest {
     if (expectedRawCamera == null) {
       Assertions.assertNull(createdRawCamera);
     } else {
-      Assertions.assertEquals(expectedRawCamera.getName(), createdRawCamera.getName());
-      Assertions.assertEquals(expectedRawCamera.getFirmware(), createdRawCamera.getFirmware());
-      Assertions.assertEquals(expectedRawCamera.getIpAddress(), createdRawCamera.getIpAddress());
-      Assertions.assertEquals(
-          expectedRawCamera.getSerialNumber(), createdRawCamera.getSerialNumber());
+      Assertions.assertEquals(expectedRawCamera,createdRawCamera);
     }
   }
 
   private static Stream<Arguments> provideFakeProductNumbers() {
     return Stream.of(
-        Arguments.of("ABCDE123456789", "123456789"),
-        Arguments.of("ABCDE123456789B", "123456789"),
+        Arguments.of("VDX-OD-6MP-ML-IR-WDR20180613AAWRC28752138", "C28752138"),
+        Arguments.of("23456789B", null),
         Arguments.of("ABCDEC23456789ABC", "C23456789"),
         Arguments.of("ABC", null),
         Arguments.of("", null),
