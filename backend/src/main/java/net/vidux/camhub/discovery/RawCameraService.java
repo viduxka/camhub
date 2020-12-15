@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Component
 class RawCameraService {
@@ -21,10 +22,11 @@ class RawCameraService {
   }
 
   void processRawCameraData(RawCameraData rawCameraData, Instant timestamp) {
-    Camera storedCamera = cameraRepository.findBySerialNumber(rawCameraData.getSerialNumber());
-    if (storedCamera == null) {
+    Optional<Camera> optionalStoredCamera = cameraRepository.findBySerialNumber(rawCameraData.getSerialNumber());
+    if (optionalStoredCamera.isEmpty()) {
       cameraRepository.save(cameraFactory.createCameraFromRawCameraDataAndTimeStamp(rawCameraData, timestamp));
     } else {
+      Camera storedCamera = optionalStoredCamera.get();
       storedCamera.setLastSeen(timestamp);
       cameraRepository.save(storedCamera);
     }

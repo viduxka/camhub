@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
+import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -38,7 +39,7 @@ class RawCameraServiceTest {
     when(mockCameraRepository.findBySerialNumber("1"))
             .thenAnswer(
                     invocation -> {
-                      return null;
+                      return Optional.empty();
                     });
     Instant timeStamp = Instant.now();
     Camera fakeCam = mock(Camera.class);
@@ -66,7 +67,7 @@ class RawCameraServiceTest {
     when(mockCameraRepository.findBySerialNumber("1"))
             .thenAnswer(
                     invocation -> {
-                      return fakeCam;
+                      return Optional.of(fakeCam);
                     });
     Instant timeStamp = Instant.now();
 
