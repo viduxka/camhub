@@ -15,10 +15,10 @@ class RawCameraService {
   private CameraRepository cameraRepository;
 
   @Autowired
-  CameraFactory cameraFactory;
-
-  @Autowired
-  CameraRepository cameraRepository;
+  public RawCameraService(CameraFactory cameraFactory, CameraRepository cameraRepository) {
+    this.cameraFactory = cameraFactory;
+    this.cameraRepository = cameraRepository;
+  }
 
   void processRawCameraData(RawCameraData rawCameraData, Instant timestamp) {
     Camera storedCamera = cameraRepository.findBySerialNumber(rawCameraData.getSerialNumber());
