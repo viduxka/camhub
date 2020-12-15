@@ -17,6 +17,7 @@ class ViduxHelperWrapper {
   };
   private ApplicationContext applicationContext =
       new AnnotationConfigApplicationContext(TimeOutConfiguration.class);
+  private int timeOut = applicationContext.getBean(TimeOutConfiguration.class).getTimeOut();
 
   List<String> findHikvisionIpCameras() throws TimeoutException, IOException {
     ProcessBuilder builder = new ProcessBuilder();
@@ -24,10 +25,10 @@ class ViduxHelperWrapper {
     Process process = builder.start();
     List<String> list = new StreamGobbler(process.getInputStream()).call();
     try {
-      if (!process.waitFor(
-          applicationContext.getBean(TimeOutConfiguration.class).getTimeOut(), TimeUnit.SECONDS)) {
+      if (!process.waitFor(timeOut, TimeUnit.SECONDS)) {
         process.destroy();
-        throw new TimeoutException("Timeout! The process did not finish in 10 seconds.");
+        throw new TimeoutException(
+            "Timeout! The process did not finish in " + timeOut + " seconds.");
       }
       if (process.waitFor() != 0) {
         throw new IOException(
