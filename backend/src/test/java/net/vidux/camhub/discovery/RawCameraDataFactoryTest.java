@@ -16,9 +16,7 @@ class RawCameraDataFactoryTest {
                 + "\t2020-12-09 16:30:09\t1\tVDX-OD-6MP-ML-IR-WDR\t\t10.30.0.1"
                 + "\t::\t::\t64\t95\t0\t1\n",
             new RawCameraData(
-                "VDX-OD-6MP-ML-IR-WDR", "94-e1-ac-d1-2a-44", "10.30.0.51", "C28752138")),
-        Arguments.of("", null),
-        Arguments.of("VDX\t1234\t10.10.0.1", null));
+                "VDX-OD-6MP-ML-IR-WDR", "94-e1-ac-d1-2a-44", "10.30.0.51", "C28752138")));
   }
 
   @ParameterizedTest
@@ -26,18 +24,14 @@ class RawCameraDataFactoryTest {
   void testCreateCamera(String fakeCamera, RawCameraData expectedRawCamera) {
     RawCameraDataFactory factory = new RawCameraDataFactory();
     RawCameraData createdRawCamera = factory.createRawCameraData(fakeCamera);
-    if (expectedRawCamera == null) {
-      Assertions.assertNull(createdRawCamera);
-    } else {
-      Assertions.assertEquals(expectedRawCamera,createdRawCamera);
-    }
+    Assertions.assertEquals(expectedRawCamera, createdRawCamera);
   }
 
   private static Stream<Arguments> provideFakeProductNumbers() {
     return Stream.of(
         Arguments.of("VDX-OD-6MP-ML-IR-WDR20180613AAWRC28752138", "C28752138"),
-        Arguments.of("23456789B", null),
         Arguments.of("ABCDEC23456789ABC", "C23456789"),
+        Arguments.of("23456789B", null),
         Arguments.of("ABC", null),
         Arguments.of("", null));
   }
