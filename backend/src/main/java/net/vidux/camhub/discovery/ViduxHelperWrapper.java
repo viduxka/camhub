@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,9 +14,9 @@ class ViduxHelperWrapper {
   private static final String[] FIND_HIKVISION_IP_CAMERAS_COMMAND = {
     "vidux-helper", "system", "findHikvisionIPCameras"
   };
-  private ApplicationContext applicationContext =
-      new AnnotationConfigApplicationContext(TimeOutConfiguration.class);
-  private int timeOut = applicationContext.getBean(TimeOutConfiguration.class).getTimeOut();
+
+  @Value("${time.out}")
+  private int timeOut;
 
   List<String> findHikvisionIpCameras() throws TimeoutException, IOException {
     ProcessBuilder builder = new ProcessBuilder();
