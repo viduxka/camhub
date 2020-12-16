@@ -36,5 +36,5 @@ public class Camera {
   @NonNull private String firmware;
   @NonNull @Setter private Instant lastSeen;
   @NonNull private String password;
-  @NaturalId private String serialNumber;
+  @NonNull @NaturalId private String serialNumber;
 }
