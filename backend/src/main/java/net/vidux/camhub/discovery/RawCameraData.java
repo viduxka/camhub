@@ -10,8 +10,8 @@ import lombok.ToString;
 @ToString
 @Builder
 class RawCameraData {
-  String name;
-  String firmware;
-  String ipAddress;
-  String serialNumber;
+  private String name;
+  private String firmware;
+  private String ipAddress;
+  private String serialNumber;
 }
