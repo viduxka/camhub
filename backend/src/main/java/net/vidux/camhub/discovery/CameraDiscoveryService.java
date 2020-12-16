@@ -1,47 +1,52 @@
 package net.vidux.camhub.discovery;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
+@Slf4j
 public class CameraDiscoveryService {
-  protected static Logger log = LoggerFactory.getLogger(CameraDiscoveryService.class.getName());
 
-  CompletableFuture<Set<RawCameraData>> cameraScanTask;
+  private final AtomicBoolean isCameraScanTaskRunning = new AtomicBoolean();
 
-  @Autowired private RawCameraEventPublisher rawCameraPublisher;
+  private final RawCameraEventPublisher rawCameraPublisher;
 
-  @Autowired private CameraScan cameraScan;
+  private final DiscoveryTask discoveryTask;
+
+  @Autowired
+  public CameraDiscoveryService(
+      RawCameraEventPublisher rawCameraPublisher, DiscoveryTask discoveryTask) {
+    this.rawCameraPublisher = rawCameraPublisher;
+    this.discoveryTask = discoveryTask;
+  }
 
   public void requestDiscovery() throws CameraDiscoveryException {
-    if (isCameraScanTaskRunning()) {
+    if (!isCameraScanTaskRunning.compareAndSet(false, true)) {
       throw new CameraDiscoveryException("Camera Scan task is already running");
     }
     discover();
   }
 
-  public boolean isCameraScanTaskRunning(){
-    return (cameraScanTask != null && !cameraScanTask.isDone());
-  }
-
   void discover() {
-    cameraScanTask = cameraScan.cameraScanTask();
-    cameraScanTask.thenAccept(this::publishRawCameraData);
+    CompletableFuture<Set<RawCameraData>> cameraScanTask = discoveryTask.discover();
     cameraScanTask.exceptionally(
         th -> {
           log.warn(th.getMessage());
+          isCameraScanTaskRunning.set(false);
           return null;
         });
+    cameraScanTask.thenAccept(this::publishRawCameraData);
   }
 
   private void publishRawCameraData(Set<RawCameraData> rawData) {
     for (RawCameraData rawCameraData : rawData) {
       rawCameraPublisher.publishRawCameraEvent(rawCameraData);
     }
+    isCameraScanTaskRunning.set(false);
   }
 }

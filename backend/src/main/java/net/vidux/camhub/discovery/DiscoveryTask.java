@@ -5,7 +5,7 @@ import org.springframework.scheduling.annotation.Async;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-interface CameraScan {
+interface DiscoveryTask {
   @Async
-  CompletableFuture<Set<RawCameraData>> cameraScanTask();
+  CompletableFuture<Set<RawCameraData>> discover();
 }
