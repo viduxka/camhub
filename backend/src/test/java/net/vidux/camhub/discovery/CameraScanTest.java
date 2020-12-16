@@ -56,7 +56,7 @@ class CameraScanTest {
     Mockito.when(mockedRawCameraDataFactory.createRawCameraData(anyString())).thenCallRealMethod();
     Mockito.when(mockedRawCameraDataFactory.extractSerialNumber(anyString())).thenCallRealMethod();
 
-    Set<RawCameraData> set = cameraScan.scanCams().getNow(new HashSet<>());
+    Set<RawCameraData> set = cameraScan.discover().getNow(new HashSet<>());
 
     Assertions.assertEquals(expectedSet, set);
   }

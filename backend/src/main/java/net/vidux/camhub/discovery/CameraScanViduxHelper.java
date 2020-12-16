@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-class CameraScanViduxHelper implements CameraScan {
+class CameraScanViduxHelper implements DiscoveryTask {
 
   private final ViduxHelperWrapper viduxHelperWrapper;
 
@@ -27,7 +27,7 @@ class CameraScanViduxHelper implements CameraScan {
   }
 
   @Override
-  public CompletableFuture<Set<RawCameraData>> scanCams() {
+  public CompletableFuture<Set<RawCameraData>> discover() {
     List<String> rawCameraLineList;
     try {
       rawCameraLineList = viduxHelperWrapper.findHikvisionIpCameras();
