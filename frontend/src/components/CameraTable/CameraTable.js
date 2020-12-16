@@ -1,8 +1,10 @@
 import { React } from "react";
 import classes from "../../containers/CamListContainer/CamListContainer.module.css";
 import CamListItem from "./CamListItem/CamListItem";
+import Discover from '../Discover/Discover';
 import Grid from "@material-ui/core/Grid";
 import PropTypes from 'prop-types';
+
 
 const CameraTable = (props) => {
   const TABLE_FIELDS = [
@@ -18,10 +20,9 @@ const CameraTable = (props) => {
     return (
       <thead>
         <tr style={{ lineHeight: "24px" }}>
-          <th
-            data-test="component-camlistcontainer-th"
-            className={classes.CameraTableHeader}
-          ></th>
+        <th data-test="component-camlistcontainer-th" className={classes.CameraTableHeader}>
+            <Discover setAlert={props.setAlert}/>
+          </th>
           {TABLE_FIELDS.map((key, index) => (
             <th
               data-test="component-camlistcontainer-th"
@@ -92,6 +93,7 @@ CameraTable.propTypes = {
   ),
   selectedCamera: PropTypes.number,
   selectCameraHandler: PropTypes.func,
+  setAlert: PropTypes.func,
 };
 
 export default CameraTable;
