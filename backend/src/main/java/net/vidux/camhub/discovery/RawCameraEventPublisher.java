@@ -10,6 +10,6 @@ class RawCameraEventPublisher {
   @Autowired private ApplicationEventPublisher eventPublisher;
 
   public void publishRawCameraEvent(RawCameraData rawCameraData) {
-    eventPublisher.publishEvent(new RawCameraEvent(rawCameraData));
+    eventPublisher.publishEvent(new RawCameraEvent(this, rawCameraData));
   }
 }

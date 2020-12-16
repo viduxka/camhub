@@ -3,9 +3,11 @@ package net.vidux.camhub.camera;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
 
@@ -19,6 +21,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode
 @Entity
 @Builder
 public class Camera {
@@ -31,7 +34,7 @@ public class Camera {
   @NonNull private String name;
   @NonNull private String ip;
   @NonNull private String firmware;
-  @NonNull private Instant lastSeen;
+  @NonNull @Setter private Instant lastSeen;
   @NonNull private String password;
-  @NaturalId private String serialNumber;
+  @NonNull @NaturalId private String serialNumber;
 }
