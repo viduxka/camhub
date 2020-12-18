@@ -24,7 +24,8 @@ class RawCameraDataFactoryTest {
   void testCreateCamera(String fakeCamera, RawCameraData expectedRawCamera) {
     RawCameraDataFactory factory = new RawCameraDataFactory();
     RawCameraData createdRawCamera = factory.createRawCameraData(fakeCamera);
-    Assertions.assertEquals(expectedRawCamera, createdRawCamera);
+    Assertions.assertEquals(
+        expectedRawCamera, createdRawCamera, "Expected and created camera are not the same.");
   }
 
   private static Stream<Arguments> provideFakeProductNumbers() {
@@ -41,6 +42,9 @@ class RawCameraDataFactoryTest {
   void testGetSerialNumber(String fakeProductNumber, String expectedSerialNumber) {
     RawCameraDataFactory factory = new RawCameraDataFactory();
     String extractedSerialNumber = factory.extractSerialNumber(fakeProductNumber);
-    Assertions.assertEquals(expectedSerialNumber, extractedSerialNumber);
+    Assertions.assertEquals(
+        expectedSerialNumber,
+        extractedSerialNumber,
+        "Expected and extracted serial number are not the same.");
   }
 }

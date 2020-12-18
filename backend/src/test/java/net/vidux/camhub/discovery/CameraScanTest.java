@@ -58,6 +58,6 @@ class CameraScanTest {
 
     Set<RawCameraData> set = cameraScan.discover().getNow(new HashSet<>());
 
-    Assertions.assertEquals(expectedSet, set);
+    Assertions.assertEquals(expectedSet, set,"Expected and created set are not the same.");
   }
 }

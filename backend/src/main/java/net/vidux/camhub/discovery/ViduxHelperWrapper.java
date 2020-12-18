@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,9 +13,7 @@ class ViduxHelperWrapper {
   private static final String[] FIND_HIKVISION_IP_CAMERAS_COMMAND = {
     "vidux-helper", "system", "findHikvisionIPCameras"
   };
-
-  @Value("${time.out}")
-  private int timeOut;
+  private static final int TIMEOUT = 10;
 
   List<String> findHikvisionIpCameras() throws TimeoutException, IOException {
     ProcessBuilder builder = new ProcessBuilder();
@@ -24,10 +21,10 @@ class ViduxHelperWrapper {
     Process process = builder.start();
     List<String> list = new StreamGobbler(process.getInputStream()).call();
     try {
-      if (!process.waitFor(timeOut, TimeUnit.SECONDS)) {
+      if (!process.waitFor(TIMEOUT, TimeUnit.SECONDS)) {
         process.destroy();
         throw new TimeoutException(
-            "Timeout! The process did not finish in " + timeOut + " seconds.");
+            "Timeout! The process did not finish in " + TIMEOUT + " seconds.");
       }
       if (process.waitFor() != 0) {
         throw new IOException(
@@ -37,7 +34,6 @@ class ViduxHelperWrapper {
       log.warn("Thread interrupted!");
       Thread.currentThread().interrupt();
     }
-
     return list;
   }
 }
