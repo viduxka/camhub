@@ -17,10 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class CamerasController {
 
-  @Autowired
-  private CameraRepository cameraRepo;
+  private final CameraRepository cameraRepo;
 
-  @Autowired private CameraRepresentationAssembler cameraRepresentationAssembler;
+  private final CameraRepresentationAssembler cameraRepresentationAssembler;
+
+  @Autowired
+  public CamerasController(
+      CameraRepository cameraRepo, CameraRepresentationAssembler cameraRepresentationAssembler) {
+    this.cameraRepo = cameraRepo;
+    this.cameraRepresentationAssembler = cameraRepresentationAssembler;
+  }
 
   @GetMapping
   public ResponseEntity<CollectionModel<CameraRepresentation>> getCameraList() {

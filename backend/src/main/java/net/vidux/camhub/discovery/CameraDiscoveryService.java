@@ -35,7 +35,7 @@ public class CameraDiscoveryService {
   void discover() {
     CompletableFuture<Set<RawCameraData>> cameraScanTask = discoveryTask.discover();
     cameraScanTask.exceptionally(
-        th -> {
+        (Throwable th) -> {
           log.warn(th.getMessage());
           isCameraScanTaskRunning.set(false);
           return null;

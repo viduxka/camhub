@@ -20,7 +20,7 @@ class CameraFactory {
         .build();
   }
 
-  private String generatePasswordFromSerialNumber(String serialNumber) {
+  private static String generatePasswordFromSerialNumber(String serialNumber) {
     return "Vidux" + serialNumber;
   }
 }

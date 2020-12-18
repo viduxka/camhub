@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationEvent;
 
 @Getter
 class RawCameraEvent extends ApplicationEvent {
-  private transient RawCameraData rawCameraData;
+  private final transient RawCameraData rawCameraData;
 
   public RawCameraEvent(Object source, RawCameraData rawCameraData) {
     super(source);

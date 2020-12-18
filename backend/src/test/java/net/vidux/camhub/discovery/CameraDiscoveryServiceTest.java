@@ -30,9 +30,13 @@ class CameraDiscoveryServiceTest {
   @Test
   void requestDiscoverTestWhenScanIsRunning() {
     when(discoveryTask.discover()).thenReturn(mockFuture);
-    Assertions.assertDoesNotThrow(cameraDiscoveryService::requestDiscovery);
+    Assertions.assertDoesNotThrow(
+        cameraDiscoveryService::requestDiscovery,
+        "Unexpected exception thrown while requestingDiscovery");
     Assertions.assertThrows(
-        CameraDiscoveryException.class, cameraDiscoveryService::requestDiscovery);
+        CameraDiscoveryException.class,
+        cameraDiscoveryService::requestDiscovery,
+        "No DiscoveryException thrown when a discovery service is already running");
   }
 
   @Test
@@ -46,7 +50,9 @@ class CameraDiscoveryServiceTest {
     mockScanResultSet.add(cam3);
     when(discoveryTask.discover()).thenReturn(CompletableFuture.completedFuture(mockScanResultSet));
 
-    Assertions.assertDoesNotThrow(cameraDiscoveryService::requestDiscovery);
+    Assertions.assertDoesNotThrow(
+        cameraDiscoveryService::requestDiscovery,
+        "Unexpected exception thrown while requestingDiscovery");
     verify(rawCameraPublisher, times(1)).publishRawCameraEvent(cam1);
     verify(rawCameraPublisher, times(1)).publishRawCameraEvent(cam2);
     verify(rawCameraPublisher, times(1)).publishRawCameraEvent(cam3);
