@@ -1,7 +1,6 @@
 package net.vidux.camhub.discovery;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,7 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -21,18 +19,18 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CameraDiscoveryServiceTest {
 
-  @Mock AtomicBoolean mockIsCameraScanTaskRunning;
-
   @Mock RawCameraEventPublisher rawCameraPublisher;
 
   @Mock DiscoveryTask discoveryTask;
 
+  @Mock CompletableFuture<Set<RawCameraData>> mockFuture;
+
   @InjectMocks CameraDiscoveryService cameraDiscoveryService;
 
   @Test
-  @Disabled("AtomicBoolean not mocked properly")
   void requestDiscoverTestWhenScanIsRunning() {
-    when(mockIsCameraScanTaskRunning.compareAndSet(false, true)).thenReturn(false);
+    when(discoveryTask.discover()).thenReturn(mockFuture);
+    Assertions.assertDoesNotThrow(cameraDiscoveryService::requestDiscovery);
     Assertions.assertThrows(
         CameraDiscoveryException.class, cameraDiscoveryService::requestDiscovery);
   }
