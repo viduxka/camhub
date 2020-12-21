@@ -22,6 +22,7 @@ class DiscoveryController {
     this.discoveryService = discoveryService;
   }
 
+  /** Empty Post request to start the discovery process */
   @PostMapping
   public void requestDiscoveryStart() {
     try {
