@@ -19,7 +19,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Relation( itemRelation = "camera", collectionRelation = "cameras")
 @Builder
-public class CameraRepresentation extends RepresentationModel<CameraRepresentation> {
+class CameraRepresentation extends RepresentationModel<CameraRepresentation> {
   private String name;
   private String ip;
   private String firmware;

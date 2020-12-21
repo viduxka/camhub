@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 @Slf4j
-public class DiscoveryController {
+class DiscoveryController {
 
   private final CameraDiscoveryService discoveryService;
 
   @Autowired
-  public DiscoveryController(CameraDiscoveryService discoveryService) {
+  DiscoveryController(CameraDiscoveryService discoveryService) {
     this.discoveryService = discoveryService;
   }
 
