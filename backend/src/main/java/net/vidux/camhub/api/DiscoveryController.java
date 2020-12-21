@@ -27,7 +27,7 @@ class DiscoveryController {
     try {
       discoveryService.requestDiscovery();
     } catch (CameraDiscoveryException e) {
-      log.warn(e.getMessage());
+      log.warn("Discovery Exception caught when trying to start a new discovery", e);
     }
   }
 }
