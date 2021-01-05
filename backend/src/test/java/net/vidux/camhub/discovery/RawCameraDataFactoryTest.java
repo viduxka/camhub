@@ -2,6 +2,7 @@ package net.vidux.camhub.discovery;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -26,6 +27,14 @@ class RawCameraDataFactoryTest {
     RawCameraData createdRawCamera = factory.createRawCameraData(fakeCamera);
     Assertions.assertEquals(
         expectedRawCamera, createdRawCamera, "Expected and created camera are not the same.");
+  }
+
+  @Test
+  void testExceptionCamera() {
+    Assertions.assertThrows(
+        IllegalArgumentException.class,
+        () -> new RawCameraDataFactory().createRawCameraData(""),
+        "Exception was not thrown.");
   }
 
   private static Stream<Arguments> provideFakeProductNumbers() {
