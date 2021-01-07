@@ -2,7 +2,6 @@ package net.vidux.camhub.discovery;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,7 +16,13 @@ class RawCameraDataFactoryTest {
                 + "\t2020-12-09 16:30:09\t1\tVDX-OD-6MP-ML-IR-WDR\t\t10.30.0.1"
                 + "\t::\t::\t64\t95\t0\t1\n",
             new RawCameraData(
-                "VDX-OD-6MP-ML-IR-WDR", "94-e1-ac-d1-2a-44", "10.30.0.51", "C28752138")));
+                "VDX-OD-6MP-ML-IR-WDR", "94-e1-ac-d1-2a-44", "10.30.0.51", "C28752138")),
+        Arguments.of(
+            "\tVDX-PRO-BX-1080P-ABF20150513CCWR518346210\tc4-2f-90-27-9b-6a\t10.30.0.215"
+                + "\t255.255.255.0\t39169\t8000\t0\t0\tV5.3.0build 151112\tV7.0 build 151019"
+                + "\t2020-12-11 00:53:13\t1\tVDX-PRO-BX-1080P-ABF",
+            new RawCameraData(
+                "VDX-PRO-BX-1080P-ABF", "c4-2f-90-27-9b-6a", "10.30.0.215", "518346210")));
   }
 
   @ParameterizedTest
@@ -29,11 +34,19 @@ class RawCameraDataFactoryTest {
         expectedRawCamera, createdRawCamera, "Expected and created camera are not the same.");
   }
 
-  @Test
-  void testExceptionCamera() {
+  private static Stream<Arguments> provideIncorrectCameras() {
+    return Stream.of(
+        Arguments.of(""),
+        Arguments.of(
+            "\tVDX-OD-1080p-FX-30M-620140710CCWR472049297\t44-19-b6-4d-75-f1\t10.30.0.225"));
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideIncorrectCameras")
+  void testExceptionThrown(String incorrectCamera) {
     Assertions.assertThrows(
         IllegalArgumentException.class,
-        () -> new RawCameraDataFactory().createRawCameraData(""),
+        () -> new RawCameraDataFactory().createRawCameraData(incorrectCamera),
         "Exception was not thrown.");
   }
 

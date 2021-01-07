@@ -56,8 +56,17 @@ class CameraScanTest {
     Mockito.when(mockedRawCameraDataFactory.createRawCameraData(anyString())).thenCallRealMethod();
     Mockito.when(mockedRawCameraDataFactory.extractSerialNumber(anyString())).thenCallRealMethod();
 
-    Set<RawCameraData> set = cameraScan.discover().getNow(new HashSet<>());
+    Set<RawCameraData> set = cameraScan.discover().getNow(null);
 
-    Assertions.assertEquals(expectedSet, set,"Expected and created set are not the same.");
+    Assertions.assertEquals(expectedSet, set, "Expected and created set are not the same.");
+  }
+
+  @Test
+  void testEmptyList() throws IOException, TimeoutException {
+    Mockito.when(mockedViduxHelperWrapper.findHikvisionIpCameras()).thenReturn(new ArrayList<>());
+
+    Set<RawCameraData> set = cameraScan.discover().getNow(null);
+
+    Assertions.assertTrue(set.isEmpty(), "Created set is not empty.");
   }
 }
