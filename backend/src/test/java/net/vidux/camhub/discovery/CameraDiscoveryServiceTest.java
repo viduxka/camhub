@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -23,16 +25,13 @@ class CameraDiscoveryServiceTest {
 
   @Mock DiscoveryTask discoveryTask;
 
-  @Mock CompletableFuture<Set<RawCameraData>> mockFuture;
+  @Spy AtomicBoolean isCameraScanTaskRunning;
 
   @InjectMocks CameraDiscoveryService cameraDiscoveryService;
 
   @Test
-  void requestDiscoverTestWhenScanIsRunning() {
-    when(discoveryTask.discover()).thenReturn(mockFuture);
-    Assertions.assertDoesNotThrow(
-        cameraDiscoveryService::requestDiscovery,
-        "Unexpected exception thrown while requestingDiscovery");
+  void testRequestDiscoverWhenScanIsRunning() {
+    isCameraScanTaskRunning.set(true);
     Assertions.assertThrows(
         CameraDiscoveryException.class,
         cameraDiscoveryService::requestDiscovery,
@@ -40,7 +39,7 @@ class CameraDiscoveryServiceTest {
   }
 
   @Test
-  void requestDiscoverTestWhenNoScanIsRunning() {
+  void testRequestDiscoverWhenNoScanIsRunning() {
     Set<RawCameraData> mockScanResultSet = new HashSet<>();
     RawCameraData cam1 = mock(RawCameraData.class);
     RawCameraData cam2 = mock(RawCameraData.class);

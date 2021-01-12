@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 public class CameraDiscoveryService {
 
-  private final AtomicBoolean isCameraScanTaskRunning = new AtomicBoolean();
+  private final AtomicBoolean isCameraScanTaskRunning;
 
   private final RawCameraEventPublisher rawCameraPublisher;
 
@@ -20,9 +20,12 @@ public class CameraDiscoveryService {
 
   @Autowired
   public CameraDiscoveryService(
-      RawCameraEventPublisher rawCameraPublisher, DiscoveryTask discoveryTask) {
+      RawCameraEventPublisher rawCameraPublisher,
+      DiscoveryTask discoveryTask,
+      AtomicBoolean isCameraScanTaskRunning) {
     this.rawCameraPublisher = rawCameraPublisher;
     this.discoveryTask = discoveryTask;
+    this.isCameraScanTaskRunning = isCameraScanTaskRunning;
   }
 
   public void requestDiscovery() throws CameraDiscoveryException {
