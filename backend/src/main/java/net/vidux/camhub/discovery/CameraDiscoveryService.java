@@ -20,6 +20,11 @@ public class CameraDiscoveryService {
 
   @Autowired
   public CameraDiscoveryService(
+      RawCameraEventPublisher rawCameraPublisher, DiscoveryTask discoveryTask) {
+    this(rawCameraPublisher, discoveryTask, new AtomicBoolean());
+  }
+
+  public CameraDiscoveryService(
       RawCameraEventPublisher rawCameraPublisher,
       DiscoveryTask discoveryTask,
       AtomicBoolean isCameraScanTaskRunning) {
