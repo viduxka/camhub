@@ -69,4 +69,22 @@ class CameraScanTest {
 
     Assertions.assertTrue(set.isEmpty(), "Created set is not empty.");
   }
+
+  @Test
+  void testFailedWrapper1() throws IOException, TimeoutException {
+    Mockito.when(mockedViduxHelperWrapper.findHikvisionIpCameras()).thenThrow(new IOException());
+
+    Assertions.assertTrue(
+        cameraScan.discover().isCompletedExceptionally(), "Future did not fail with IOException.");
+  }
+
+  @Test
+  void testFailedWrapper2() throws IOException, TimeoutException {
+    Mockito.when(mockedViduxHelperWrapper.findHikvisionIpCameras())
+        .thenThrow(new TimeoutException());
+
+    Assertions.assertTrue(
+        cameraScan.discover().isCompletedExceptionally(),
+        "Future did not fail with TimeOutException.");
+  }
 }
