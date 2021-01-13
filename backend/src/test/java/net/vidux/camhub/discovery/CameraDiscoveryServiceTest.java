@@ -1,5 +1,6 @@
 package net.vidux.camhub.discovery;
 
+import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +14,9 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -55,5 +58,13 @@ class CameraDiscoveryServiceTest {
     verify(rawCameraPublisher, times(1)).publishRawCameraEvent(cam1);
     verify(rawCameraPublisher, times(1)).publishRawCameraEvent(cam2);
     verify(rawCameraPublisher, times(1)).publishRawCameraEvent(cam3);
+  }
+
+  @Test
+  void testFailedDiscovery() throws CameraDiscoveryException {
+    when(discoveryTask.discover()).thenReturn(CompletableFuture.failedFuture(new IOException()));
+
+    cameraDiscoveryService.requestDiscovery();
+    verify(rawCameraPublisher,never()).publishRawCameraEvent(any());
   }
 }
