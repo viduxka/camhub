@@ -71,20 +71,37 @@ class CameraScanTest {
   }
 
   @Test
-  void testFailedWrapper1() throws IOException, TimeoutException {
+  void testFailedWrapperIO() throws IOException, TimeoutException {
     Mockito.when(mockedViduxHelperWrapper.findHikvisionIpCameras()).thenThrow(new IOException());
 
-    Assertions.assertTrue(
-        cameraScan.discover().isCompletedExceptionally(), "Future did not fail with IOException.");
+    Assertions.assertTrue(cameraScan.discover().isCompletedExceptionally(), "Future did not fail.");
+
+    cameraScan
+        .discover()
+        .exceptionally(
+            throwable -> {
+              Assertions.assertThrows(
+                  IOException.class, throwable::getCause, "Future did not fail with IOException.");
+              return null;
+            });
   }
 
   @Test
-  void testFailedWrapper2() throws IOException, TimeoutException {
+  void testFailedWrapperTimeOut() throws IOException, TimeoutException {
     Mockito.when(mockedViduxHelperWrapper.findHikvisionIpCameras())
         .thenThrow(new TimeoutException());
 
-    Assertions.assertTrue(
-        cameraScan.discover().isCompletedExceptionally(),
-        "Future did not fail with TimeOutException.");
+    Assertions.assertTrue(cameraScan.discover().isCompletedExceptionally(), "Future did not fail.");
+
+    cameraScan
+        .discover()
+        .exceptionally(
+            throwable -> {
+              Assertions.assertThrows(
+                  TimeoutException.class,
+                  throwable::getCause,
+                  "Future did not fail with TimeOutException.");
+              return null;
+            });
   }
 }
