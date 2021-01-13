@@ -10,7 +10,7 @@ plugins {
 apply plugin: 'groovy'
 
 group = 'net.vidux'
-version = '0.0.1-SNAPSHOT'
+version = ''
 sourceCompatibility = '11'
 
 repositories {
@@ -31,15 +31,6 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     pitest 'org.pitest:pitest-junit5-plugin:0.12'
-}
-
-task copyFrontEnd(type: Copy) {
-    from "$rootDir/frontend/build"
-    into "$rootDir/backend/build/resources/main/static/."
-}
-
-task delFrontEnd(type: Delete){
-    delete "$rootDir/backend/build/resources/main/static/", "application.properties"
 }
 
 pitest {
@@ -76,7 +67,3 @@ testlogger {
     showFailedStandardStreams true
     // logLevel "lifecycle"
 }
-
-bootJar.dependsOn(copyFrontEnd)
-assemble.mustRunAfter(":frontend:build")
-bootRun.dependsOn(delFrontEnd)

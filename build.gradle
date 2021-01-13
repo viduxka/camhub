@@ -1,0 +1,26 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id 'java'
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
+
+shadowJar {
+    entryCompression = ZipEntryCompression.STORED
+    archiveFileName.set('camhub.jar')
+    manifest {
+        attributes 'Main-Class': 'org.springframework.boot.loader.JarLauncher'
+        attributes 'Start-Class': 'net.vidux.camhub.CamHubApplication'
+    }
+    from ("$rootDir/backend/build") {
+        include '**'
+    }
+
+    from ("$rootDir/frontend/build") {
+        include '**'
+    }
+}
+
+shadowJar.dependsOn(":backend:build")
+shadowJar.dependsOn(":frontend:build")
