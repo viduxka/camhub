@@ -10,7 +10,7 @@ plugins {
 apply plugin: 'groovy'
 
 group = 'net.vidux'
-version = ''
+version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {

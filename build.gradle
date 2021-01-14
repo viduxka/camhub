@@ -13,12 +13,12 @@ shadowJar {
         attributes 'Main-Class': 'org.springframework.boot.loader.JarLauncher'
         attributes 'Start-Class': 'net.vidux.camhub.CamHubApplication'
     }
-    from ("$rootDir/backend/build") {
+    from ("$rootDir/backend/build/libs") {
         include '**'
     }
 
-    from ("$rootDir/frontend/build") {
-        include '**'
+    into 'resources', {
+        from "$rootDir/frontend/build/"
     }
 }
 
