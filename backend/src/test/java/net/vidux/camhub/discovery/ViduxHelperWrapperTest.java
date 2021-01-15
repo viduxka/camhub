@@ -32,7 +32,7 @@ public class ViduxHelperWrapperTest {
             + "\t::\t::\t0\t79\t0\t1\n");
 
     Mockito.when(process.waitFor(10, TimeUnit.SECONDS)).thenReturn(true);
-    Mockito.when(process.waitFor()).thenReturn(0);
+    Mockito.when(process.exitValue()).thenReturn(0);
     Mockito.when(streamGobbler.call()).thenReturn(list);
 
     Assertions.assertEquals(
@@ -42,7 +42,7 @@ public class ViduxHelperWrapperTest {
   @Test
   void testInputOutputException() throws InterruptedException {
     Mockito.when(process.waitFor(10, TimeUnit.SECONDS)).thenReturn(true);
-    Mockito.when(process.waitFor()).thenReturn(1);
+    Mockito.when(process.exitValue()).thenReturn(1);
     Assertions.assertThrows(
         IOException.class, wrapper::findHikvisionIpCameras, "IOException was not thrown.");
   }

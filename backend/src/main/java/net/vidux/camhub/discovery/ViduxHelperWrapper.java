@@ -31,7 +31,7 @@ class ViduxHelperWrapper {
         throw new TimeoutException(
             "Timeout! The process did not finish in " + TIMEOUT + " seconds.");
       }
-      if (process.waitFor() != 0) {
+      if (process.exitValue() != 0) {
         throw new IOException(
             "Could not run vidux-helper command properly. Error: " + process.getErrorStream());
       }
