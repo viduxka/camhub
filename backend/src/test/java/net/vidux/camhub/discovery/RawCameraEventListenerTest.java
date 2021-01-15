@@ -14,13 +14,15 @@ public class RawCameraEventListenerTest {
 
   @Mock RawCameraService service;
 
+  @Mock RawCameraEventPublisher publisher;
+
   @Test
   void testListener() {
     RawCameraData rawCameraData =
         new RawCameraData("VDX-OD-6MP-ML-IR-WDR", "94-e1-ac-d1-2a-44", "10.30.0.51", "C28752138");
 
     RawCameraEvent rawCameraEvent =
-        new RawCameraEvent(new RawCameraEventPublisher(), rawCameraData);
+        new RawCameraEvent(publisher, rawCameraData);
 
     new RawCameraEventListener(service).handleRawCameraEvent(rawCameraEvent);
 

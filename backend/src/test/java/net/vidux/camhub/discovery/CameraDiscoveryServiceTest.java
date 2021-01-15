@@ -61,10 +61,10 @@ class CameraDiscoveryServiceTest {
   }
 
   @Test
-  void testFailedDiscovery() throws CameraDiscoveryException {
+  void testFailedDiscovery() {
     when(discoveryTask.discover()).thenReturn(CompletableFuture.failedFuture(new IOException()));
-
-    cameraDiscoveryService.requestDiscovery();
-    verify(rawCameraPublisher,never()).publishRawCameraEvent(any());
+    Assertions.assertDoesNotThrow(
+        cameraDiscoveryService::requestDiscovery, "Unexpected exception thrown.");
+    verify(rawCameraPublisher, never()).publishRawCameraEvent(any());
   }
 }

@@ -24,17 +24,15 @@ public class CameraRepresentationAssemblerTest {
 
     CameraRepresentation expectedCameraRepresentation =
         CameraRepresentation.builder()
-            .name("VDX-OD-6MP-ML-IR-WDR")
-            .ip("10.30.0.51")
-            .firmware("94-e1-ac-d1-2a-44")
-            .lastSeen(
-                ZonedDateTime.ofInstant(
-                    Instant.ofEpochMilli(1605776141000L), ZoneId.systemDefault()))
-            .password("ViduxC28752138")
-            .serialNumber("C28752138")
+            .name(camera.getName())
+            .ip(camera.getIp())
+            .firmware(camera.getFirmware())
+            .lastSeen(ZonedDateTime.ofInstant(camera.getLastSeen(), ZoneId.systemDefault()))
+            .password(camera.getPassword())
+            .serialNumber(camera.getSerialNumber())
             .build();
 
-    Link camConfig = Link.of("http://10.30.0.51", "camConfig");
+    Link camConfig = Link.of("http://" + camera.getIp(), "camConfig");
     expectedCameraRepresentation.add(camConfig);
 
     Assertions.assertEquals(
