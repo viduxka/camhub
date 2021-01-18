@@ -24,3 +24,6 @@ shadowJar {
 
 shadowJar.dependsOn(":backend:build")
 shadowJar.dependsOn(":frontend:build")
+
+build.dependsOn(shadowJar)
+jar.enabled(false)
