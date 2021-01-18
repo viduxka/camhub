@@ -13,18 +13,11 @@ class ViduxHelperWrapper {
   private static final String[] FIND_HIKVISION_IP_CAMERAS_COMMAND = {
     "vidux-helper", "system", "findHikvisionIPCameras"
   };
+
   private static final int TIMEOUT = 10;
 
-  private Process process;
-
-  private StreamGobbler streamGobbler;
-
-  ViduxHelperWrapper() throws IOException {
-    this.process = new ProcessBuilder().command(FIND_HIKVISION_IP_CAMERAS_COMMAND).start();
-    this.streamGobbler = new StreamGobbler(process.getInputStream());
-  }
-
   List<String> findHikvisionIpCameras() throws TimeoutException, IOException {
+    Process process = new ProcessBuilder().command(FIND_HIKVISION_IP_CAMERAS_COMMAND).start();
     try {
       if (!process.waitFor(TIMEOUT, TimeUnit.SECONDS)) {
         process.destroy();
@@ -39,6 +32,6 @@ class ViduxHelperWrapper {
       log.warn("Thread interrupted!");
       Thread.currentThread().interrupt();
     }
-    return streamGobbler.call();
+    return new StreamGobbler(process.getInputStream()).call();
   }
 }
