@@ -59,4 +59,13 @@ public class StreamGobblerTest {
         new StreamGobbler(stream).call(),
         "Expected strings and generated strings are not the same.");
   }
+
+  @Test
+  void testEmptyStream() {
+    String initialString = "";
+    InputStream stream = new ByteArrayInputStream(initialString.getBytes());
+
+    Assertions.assertTrue(
+        new StreamGobbler(stream).call().isEmpty(), "Generated list is not empty.");
+  }
 }
