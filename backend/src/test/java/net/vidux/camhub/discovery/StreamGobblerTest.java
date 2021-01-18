@@ -14,9 +14,12 @@ public class StreamGobblerTest {
     String initialString = "VDX-OD-1080p-FX-30M-620140710CCWR472049297";
     InputStream stream = new ByteArrayInputStream(initialString.getBytes());
 
+    List<String> expectedStrings = new ArrayList<>();
+    expectedStrings.add(initialString);
+
     Assertions.assertEquals(
-        initialString,
-        new StreamGobbler(stream).call().get(0),
+        expectedStrings,
+        new StreamGobbler(stream).call(),
         "Expected string and generated are not the same.");
   }
 
@@ -25,7 +28,7 @@ public class StreamGobblerTest {
     String firstLine = "VDX-OD-1080p-FX-30M-620140710CCWR472049297";
     String secondLine = "44-19-b6-4d-75-f1";
     String newLine = System.getProperty("line.separator");
-    String initialString = firstLine + newLine + secondLine;
+    String initialString = String.join(newLine, firstLine, secondLine);
     InputStream stream = new ByteArrayInputStream(initialString.getBytes());
 
     List<String> expectedStrings = new ArrayList<>();
@@ -42,8 +45,9 @@ public class StreamGobblerTest {
   void testEmptyLine() {
     String firstLine = "VDX-OD-1080p-FX-30M-620140710CCWR472049297";
     String secondLine = "44-19-b6-4d-75-f1";
+    String emptyLine = "";
     String newLine = System.getProperty("line.separator");
-    String initialString = firstLine + newLine + "" + newLine + secondLine;
+    String initialString = String.join(newLine, firstLine, emptyLine, secondLine);
     InputStream stream = new ByteArrayInputStream(initialString.getBytes());
 
     List<String> expectedStrings = new ArrayList<>();
