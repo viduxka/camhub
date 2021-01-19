@@ -5,6 +5,7 @@ import java.io.InterruptedIOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ class ViduxHelperWrapper {
   private final ProcessFactory processFactory;
 
   @Autowired
-  public ViduxHelperWrapper(ProcessFactory processFactory) {
+  public ViduxHelperWrapper(@NonNull ProcessFactory processFactory) {
     this.processFactory = processFactory;
   }
 
@@ -45,7 +46,9 @@ class ViduxHelperWrapper {
    * @throws InterruptedIOException if the process execution is interrupted
    */
   List<String> findHikvisionIpCameras() throws TimeoutException, IOException {
+    log.debug("create find hikvision ip cameras process with {}", processFactory);
     Process process = processFactory.create(FIND_HIKVISION_IP_CAMERAS_COMMAND);
+    log.debug("process info: {}", process.info());
     try {
       if (!process.waitFor(TIMEOUT, TimeUnit.SECONDS)) {
         process.destroy();
@@ -57,7 +60,6 @@ class ViduxHelperWrapper {
             "Could not run vidux-helper command properly. Error: " + process.getErrorStream());
       }
     } catch (InterruptedException e) {
-      log.warn("Find hikvision cameras is interrupted!");
       process.destroy();
       Thread.currentThread().interrupt();
       throw new InterruptedIOException("process's which should be destroyed pid: " + process.pid());
