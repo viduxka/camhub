@@ -10,8 +10,12 @@ import java.time.Instant;
 @Component
 public class RawCameraEventListener {
 
+  private final RawCameraService rawCameraService;
+
   @Autowired
-  RawCameraService rawCameraService;
+  public RawCameraEventListener(RawCameraService rawCameraService) {
+    this.rawCameraService = rawCameraService;
+  }
 
   @Async
   @EventListener

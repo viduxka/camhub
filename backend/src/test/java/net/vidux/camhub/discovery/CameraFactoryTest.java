@@ -73,7 +73,10 @@ class CameraFactoryTest {
     CameraFactory cameraFactory = new CameraFactory();
     Camera resultCamera =
         cameraFactory.createCameraFromRawCameraDataAndTimeStamp(rawCameraData, timeStamp);
-    assertEquals(expectedCamera, resultCamera);
+    assertEquals(
+        expectedCamera,
+        resultCamera,
+        "Camera created from rawData does not match the expected result");
   }
 
   private static Stream<Arguments> provideRawCameraDataWithNull() {
@@ -97,6 +100,7 @@ class CameraFactoryTest {
     CameraFactory cameraFactory = new CameraFactory();
     assertThrows(
         NullPointerException.class,
-        () -> cameraFactory.createCameraFromRawCameraDataAndTimeStamp(rawCameraData, timeStamp));
+        () -> cameraFactory.createCameraFromRawCameraDataAndTimeStamp(rawCameraData, timeStamp),
+        "No NullPointerException was thrown while creating a camera from rawData and one of the params was null");
   }
 }

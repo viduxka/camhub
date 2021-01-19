@@ -10,7 +10,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @Component
-public class CameraRepresentationAssembler
+class CameraRepresentationAssembler
     extends RepresentationModelAssemblerSupport<Camera, CameraRepresentation> {
 
   public CameraRepresentationAssembler() {

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import lombok.NonNull;
 
 class StreamGobbler implements Callable<List<String>> {
-  private InputStream inputStream;
+  private final InputStream inputStream;
 
   public StreamGobbler(@NonNull InputStream inputStream) {
     this.inputStream = inputStream;

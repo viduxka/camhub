@@ -13,21 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 @Slf4j
-public class DiscoveryController {
+class DiscoveryController {
 
   private final CameraDiscoveryService discoveryService;
 
   @Autowired
-  public DiscoveryController(CameraDiscoveryService discoveryService) {
+  DiscoveryController(CameraDiscoveryService discoveryService) {
     this.discoveryService = discoveryService;
   }
 
+  /** Empty Post request to start the discovery process */
   @PostMapping
   public void requestDiscoveryStart() {
     try {
       discoveryService.requestDiscovery();
     } catch (CameraDiscoveryException e) {
-      log.warn(e.getMessage());
+      log.warn("Discovery Exception caught when trying to start a new discovery", e);
     }
   }
 }

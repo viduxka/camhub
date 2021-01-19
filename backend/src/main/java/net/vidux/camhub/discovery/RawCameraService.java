@@ -11,9 +11,9 @@ import java.util.Optional;
 @Component
 class RawCameraService {
 
-  private CameraFactory cameraFactory;
+  private final CameraFactory cameraFactory;
 
-  private CameraRepository cameraRepository;
+  private final CameraRepository cameraRepository;
 
   @Autowired
   public RawCameraService(CameraFactory cameraFactory, CameraRepository cameraRepository) {
