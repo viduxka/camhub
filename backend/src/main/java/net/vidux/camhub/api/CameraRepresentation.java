@@ -17,7 +17,7 @@ import java.time.ZonedDateTime;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Relation( itemRelation = "camera", collectionRelation = "cameras")
+@Relation(itemRelation = "camera", collectionRelation = "cameras")
 @Builder
 class CameraRepresentation extends RepresentationModel<CameraRepresentation> {
   private String name;

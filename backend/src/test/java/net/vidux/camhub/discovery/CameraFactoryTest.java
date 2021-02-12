@@ -68,7 +68,7 @@ class CameraFactoryTest {
 
   @ParameterizedTest
   @MethodSource("provideRawCameraData")
-  void createCameraFromRawCameraDataAndTimeStampTest(
+  void testCreateCameraFromRawCameraDataAndTimeStamp(
       RawCameraData rawCameraData, Camera expectedCamera, Instant timeStamp) {
     CameraFactory cameraFactory = new CameraFactory();
     Camera resultCamera =
@@ -95,12 +95,12 @@ class CameraFactoryTest {
 
   @ParameterizedTest
   @MethodSource("provideRawCameraDataWithNull")
-  void createCameraFromRawCameraDataAndTimeStampTestNullParam(
+  void testCreateCameraFromRawCameraDataAndTimeStampNullParam(
       RawCameraData rawCameraData, Instant timeStamp) {
     CameraFactory cameraFactory = new CameraFactory();
     assertThrows(
         NullPointerException.class,
         () -> cameraFactory.createCameraFromRawCameraDataAndTimeStamp(rawCameraData, timeStamp),
-        "No NullPointerException was thrown while creating a camera from rawData and one of the params was null");
+        "No NullPointerException was thrown while one of the params was null");
   }
 }

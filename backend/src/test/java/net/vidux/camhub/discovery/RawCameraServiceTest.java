@@ -19,62 +19,49 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class RawCameraServiceTest {
 
-  @Mock
-  CameraRepository mockCameraRepository;
+  @Mock CameraRepository mockCameraRepository;
 
-  @Mock
-  CameraFactory fakeCameraFactory;
+  @Mock CameraFactory fakeCameraFactory;
 
-  @InjectMocks
-  RawCameraService rawCameraService;
+  @InjectMocks RawCameraService rawCameraService;
 
   @Test
-  void processRawCameraDataTestNewCamera(){
+  void testProcessRawCameraDataNewCamera() {
     RawCameraData fakeRawCameraData = mock(RawCameraData.class);
     when(fakeRawCameraData.getSerialNumber())
-            .thenAnswer(
-                    invocation -> {
-                      return "1";
-                    });
+        .thenAnswer(
+            invocation -> "1");
     when(mockCameraRepository.findBySerialNumber("1"))
-            .thenAnswer(
-                    invocation -> {
-                      return Optional.empty();
-                    });
+        .thenAnswer(
+            invocation -> Optional.empty());
     Instant timeStamp = Instant.now();
     Camera fakeCam = mock(Camera.class);
     when(fakeCameraFactory.createCameraFromRawCameraDataAndTimeStamp(fakeRawCameraData, timeStamp))
-            .thenAnswer(
-                    invocation -> {
-                      return fakeCam;
-                    });
+        .thenAnswer(
+            invocation -> fakeCam);
 
     rawCameraService.processRawCameraData(fakeRawCameraData, timeStamp);
 
-    verify(fakeCameraFactory, times(1)).createCameraFromRawCameraDataAndTimeStamp(fakeRawCameraData, timeStamp);
+    verify(fakeCameraFactory, times(1))
+        .createCameraFromRawCameraDataAndTimeStamp(fakeRawCameraData, timeStamp);
     verify(mockCameraRepository, times(1)).save(fakeCam);
   }
 
   @Test
-  void processRawCameraDataTestUpdateCamera(){
+  void testProcessRawCameraDataUpdateCamera() {
     RawCameraData fakeRawCameraData = mock(RawCameraData.class);
     when(fakeRawCameraData.getSerialNumber())
-            .thenAnswer(
-                    invocation -> {
-                      return "1";
-                    });
+        .thenAnswer(
+            invocation -> "1");
     Camera fakeCam = mock(Camera.class);
     when(mockCameraRepository.findBySerialNumber("1"))
-            .thenAnswer(
-                    invocation -> {
-                      return Optional.of(fakeCam);
-                    });
+        .thenAnswer(
+            invocation -> Optional.of(fakeCam));
     Instant timeStamp = Instant.now();
 
     rawCameraService.processRawCameraData(fakeRawCameraData, timeStamp);
 
     verify(fakeCam, times(1)).setLastSeen(timeStamp);
     verify(mockCameraRepository, times(1)).save(fakeCam);
-
   }
 }

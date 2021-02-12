@@ -7,7 +7,14 @@ import java.util.concurrent.TimeoutException
 
 class ViduxHelperWrapperTest extends Specification {
 
-    def "process timed out"() {
+    def "required process factory for constructor must not be null"() {
+        when:
+        new ViduxHelperWrapper(null)
+        then:
+        thrown(NullPointerException)
+    }
+
+    def "exception is thrown if timeout is reached"() {
         given: "a process which won't answer our call"
         def process = Mock(Process) {
             waitFor(_ as Long, _ as TimeUnit) >> false
@@ -25,7 +32,7 @@ class ViduxHelperWrapperTest extends Specification {
         1 * process.destroy()
     }
 
-    def "process exited with error code"() {
+    def "exception is thrown if the process exit with error"() {
         given: "a process which returned with error"
         def process = Mock(Process) {
             waitFor(_ as Long, _ as TimeUnit) >> true
@@ -39,7 +46,7 @@ class ViduxHelperWrapperTest extends Specification {
         when: "we request the wrapper to look for cameras"
         wrapper.findHikvisionIpCameras()
 
-        then: "we expect a IOException"
+        then: "we expect an IOException"
         thrown(IOException)
     }
 
@@ -62,7 +69,7 @@ class ViduxHelperWrapperTest extends Specification {
         ["a cool result"] == cameras
     }
 
-    def "in the case of thread interruption"() {
+    def "in the case of thread interruption runtime exception is thrown"() {
         given: "a process which is a bit slow"
         def process = Mock(Process) {
             waitFor(_ as Long, _ as TimeUnit) >> { throw new InterruptedException("thread death") }

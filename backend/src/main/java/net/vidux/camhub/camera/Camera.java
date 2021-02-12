@@ -28,7 +28,7 @@ public class Camera {
   @Id
   @GeneratedValue(generator = "UUID")
   @Type(type = "uuid-char")
-  @Column( nullable = false,  updatable = false, columnDefinition = "varchar(36)")
+  @Column(nullable = false,  updatable = false, columnDefinition = "varchar(36)")
   private UUID id;
 
   @NonNull private String name;
