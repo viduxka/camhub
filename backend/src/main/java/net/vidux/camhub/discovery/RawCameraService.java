@@ -22,9 +22,11 @@ class RawCameraService {
   }
 
   void processRawCameraData(RawCameraData rawCameraData, Instant timestamp) {
-    Optional<Camera> optionalStoredCamera = cameraRepository.findBySerialNumber(rawCameraData.getSerialNumber());
+    Optional<Camera> optionalStoredCamera =
+        cameraRepository.findBySerialNumber(rawCameraData.getSerialNumber());
     if (optionalStoredCamera.isEmpty()) {
-      cameraRepository.save(cameraFactory.createCameraFromRawCameraDataAndTimeStamp(rawCameraData, timestamp));
+      cameraRepository.save(
+          cameraFactory.createCameraFromRawCameraDataAndTimeStamp(rawCameraData, timestamp));
     } else {
       Camera storedCamera = optionalStoredCamera.get();
       storedCamera.setLastSeen(timestamp);
