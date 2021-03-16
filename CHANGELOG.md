@@ -23,6 +23,7 @@
 ### Removed
 - List based DB ([#46](https://github.com/viduxka/testingo/pull/46))
 - Obsolete tests ([#46](https://github.com/viduxka/testingo/pull/46))
+- ez jó kérdés
 
 ### Test
 - Run by: npm test ([#36](https://github.com/viduxka/testingo/pull/36))
