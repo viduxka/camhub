@@ -1,5 +1,6 @@
 package net.vidux.camhub.api;
 
+import java.time.ZonedDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
-
-import java.time.ZonedDateTime;
 
 @Getter
 @ToString
