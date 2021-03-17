@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
@@ -29,12 +30,18 @@ public class Camera {
   @Column(nullable = false, updatable = false, columnDefinition = "varchar(36)")
   private UUID id;
 
+  @NonNull
   private String name;
+  @NonNull
   private String ip;
+  @NonNull
   private String firmware;
+  @NonNull
   @Setter
   private Instant lastSeen;
+  @NonNull
   private String password;
+  @NonNull
   @NaturalId
   private String serialNumber;
 }
