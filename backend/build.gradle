@@ -30,7 +30,7 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
-    pitest 'org.pitest:pitest-junit5-plugin:0.12'
+    pitest 'org.pitest:pitest-junit5-plugin:0.14'
 }
 
 pitest {
