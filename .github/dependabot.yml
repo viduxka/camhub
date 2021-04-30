@@ -6,3 +6,17 @@
       interval: "daily"
       time: "03:00"
       timezone: "Europe/Budapest"
+  - package-ecosystem: "gradle"
+    directory: "/frontend"
+    schedule:
+      interval: "daily"
+      time: "03:00"
+      timezone: "Europe/Budapest"
+    ignore:
+    - dependency-name: "*"
+  - package-ecosystem: "gradle"
+    directory: "/backend"
+    schedule:
+      interval: "daily"
+      time: "03:00"
+      timezone: "Europe/Budapest"
