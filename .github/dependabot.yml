@@ -1,21 +1,13 @@
   version: 2
   updates:
   - package-ecosystem: "gradle"
-    directory: "/build.gradle"
+    directory: "/"
     schedule:
       interval: "daily"
       time: "03:00"
       timezone: "Europe/Budapest"
-  - package-ecosystem: "gradle"
+  - package-ecosystem: "npm"
     directory: "/frontend"
-    schedule:
-      interval: "daily"
-      time: "03:00"
-      timezone: "Europe/Budapest"
-    ignore:
-    - dependency-name: "*"
-  - package-ecosystem: "gradle"
-    directory: "/backend"
     schedule:
       interval: "daily"
       time: "03:00"
