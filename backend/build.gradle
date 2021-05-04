@@ -4,7 +4,7 @@ plugins {
     id 'java'
     id 'info.solidsoft.pitest' version '1.5.2'
     id "com.adarshr.test-logger" version "2.1.1"
-    id "com.github.ben-manes.versions" version "0.34.0"
+    id "com.github.ben-manes.versions" version "0.38.0"
 }
 
 apply plugin: 'groovy'
