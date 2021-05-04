@@ -6,6 +6,8 @@
       interval: "daily"
       time: "03:00"
       timezone: "Europe/Budapest"
+    ignore:
+    - dependency-name: "info.solidsoft.pitest"
   - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:
