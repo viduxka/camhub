@@ -10,6 +10,5 @@ public class CamHubApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(CamHubApplication.class, args);
-
   }
 }
