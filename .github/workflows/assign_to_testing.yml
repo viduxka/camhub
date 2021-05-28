@@ -1,0 +1,15 @@
+name: Assign to testing
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  auto-assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Assign closed issues to testing'
+        uses: pozil/auto-assign-issue@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: psiklos
