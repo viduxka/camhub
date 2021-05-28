@@ -11,5 +11,5 @@ jobs:
       - name: 'Assign closed issues to testing'
         uses: pozil/auto-assign-issue@v1
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUBACTIONTEST }}
           assignees: psiklos
